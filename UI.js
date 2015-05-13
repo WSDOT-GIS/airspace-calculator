@@ -2,9 +2,9 @@
 
 /**
  * Provides Airspace Calculator UI
- * @module AirspaceCalculator
+ * @module AirspaceCalculator/UI
  */
-define(["dms"], function (DmsCoordinates) {
+define(["dms", "AirspaceCalculator"], function (DmsCoordinates, AirspaceCalculator) {
 
 	/**
 	 * Creates a button
@@ -95,11 +95,17 @@ define(["dms"], function (DmsCoordinates) {
 	}
 
 	/**
+	 * UI for the AirspaceCalculator
 	 * @constructor
-	 * @alias module:AirspaceCalculator
+	 * @alias module:AirspaceCalculator/UI
+	 * @param {string} imageServiceUrl
 	 */
-	function AirspaceCalculator() {
+	function UI(imageServiceUrl) {
 		var form, frag, div, btn, inputContainer;
+
+		var airspaceCalc = new AirspaceCalculator(imageServiceUrl);
+
+
 
 		form = document.createElement("form");
 		form.classList.add("airspace-calculator");
@@ -107,6 +113,15 @@ define(["dms"], function (DmsCoordinates) {
 		Object.defineProperty(this, "form", {
 			get: function () {
 				return form;
+			}
+		});
+
+		Object.defineProperties(this, {
+			airspaceCalculator: {
+				value: airspaceCalc
+			},
+			imageServiceUrl: {
+				value: imageServiceUrl
 			}
 		});
 
@@ -165,15 +180,16 @@ define(["dms"], function (DmsCoordinates) {
 		form.appendChild(inputContainer);
 
 
-		// Add buttons
-		div = document.createElement("div");
-		div.classList.add("btn-group");
+
+		var mapButtons = document.createElement("div");
+		mapButtons.classList.add("map-buttons");
 
 		btn = createButton({
-			caption: "Add from map",
+			caption: "Get coords. from map",
 			title: "Pick coordinates by clicking a location on the map"
 		});
-		div.appendChild(btn);
+		mapButtons.appendChild(btn);
+
 
 		btn.addEventListener("click", function () {
 			var evt = new CustomEvent("add-from-map", {
@@ -182,11 +198,12 @@ define(["dms"], function (DmsCoordinates) {
 			form.dispatchEvent(evt);
 		});
 
+
 		btn = createButton({
 			caption: "Clear Graphics",
 			title: "Clears graphics from the map created by this control"
 		});
-		div.appendChild(btn);
+		mapButtons.appendChild(btn);
 
 		btn.addEventListener("click", function () {
 			var evt = new CustomEvent("clear-graphics", {
@@ -194,6 +211,12 @@ define(["dms"], function (DmsCoordinates) {
 			});
 			form.dispatchEvent(evt);
 		});
+
+		form.appendChild(mapButtons);
+
+		// Add buttons
+		div = document.createElement("div");
+		div.classList.add("btn-group");
 
 		btn = createButton({
 			type: "submit",
@@ -220,9 +243,26 @@ define(["dms"], function (DmsCoordinates) {
 
 		// Disable default form submission behavior (which is to navigate away from current page)
 		form.onsubmit = function () {
+			var x, y, agl;
+
+			x = Number(form.x.value);
+			y = Number(form.y.value);
+			agl = Number(form.height.value);
+
+			airspaceCalc.calculate(x, y, agl).then(function (response) {
+				var evt = new CustomEvent("calculation-complete", {
+					detail: response
+				});
+				form.dispatchEvent(evt);
+			}, function (error) {
+				var evt = new CustomEvent("calculation-error", {
+					detail: error
+				});
+				form.dispatchEvent(evt);
+			});
 			return false;
 		};
 	}
 
-	return AirspaceCalculator;
+	return UI;
 });

@@ -84,8 +84,46 @@ body {
 }
 
 .airspace-calculator .btn-group {
-    width: auto;
+    width: 100%;
+    display: flex;
 }
+
+    .airspace-calculator .btn-group > button {
+        -ms-flex-flow: row;
+        flex-flow: row;
+        -ms-flex: 1;
+        flex: 1;
+
+        background: none;
+        border: none;
+        color: white;
+    }
+
+        .airspace-calculator .btn-group > button:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+
+        .airspace-calculator .btn-group > button:last-child {
+            border-radius: 0 5px 5px 0;
+        }
+
+    .airspace-calculator button[type=submit] {
+        background: none;
+        border: none;
+        background-color: green;
+    }
+
+    .airspace-calculator button[type=submit]:hover {
+        background-color: darkseagreen;
+    }
+
+    .airspace-calculator button[type=reset] {
+        background-color: red;
+    }
+
+    .airspace-calculator button[type=reset]:hover {
+        background-color: lightcoral;
+    }
 
 .airspace-calculator > .container {
     display: table;
