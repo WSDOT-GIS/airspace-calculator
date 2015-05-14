@@ -1,14 +1,15 @@
 {
-    "name": "airspace-calculator",
+    "name": "AirspaceCalculator",
     "main": [
-        "airspace-calculator.js",
-        "arcgis-utils.js"
+        "AirspaceCalculator.js",
+        "UI.js",
+        "ArcGisUI.js"
     ],
     "version": "0.0.0",
     "authors": [
         "WSDOT"
     ],
-    "description": "Control that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height.",
+    "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
     "moduleType": [
         "amd"
     ],
@@ -28,10 +29,10 @@
         "tests"
     ],
     "dependencies": {
-        "dms": "~1.0.1"
+        "dms": "~1.0.1",
+        "customevent-polyfill": "~1.0.0"
     },
     "devDependencies": {
-        "customevent-polyfill": "~1.0.0"
     },
     "private": true
 }

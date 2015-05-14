@@ -1,4 +1,7 @@
-﻿ArcGIS Flex layout template
-===========================
+﻿Airspace Calculator
+===================
 
-A template for displaying a map with a side panel using CSS flex.
+A module that will calculate surface penetration using the [USGS NED Point Query Service] and an ArcGIS [Image service].
+
+[USGS NED Point Query Service]:http://ned.usgs.gov/epqs/
+[Image Service]:http://resources.arcgis.com/en/help/arcgis-rest-api/#/Image_Service/02r3000000q8000000/
