@@ -4,8 +4,30 @@
  * Provides Airspace Calculator UI
  * @module AirspaceCalculator/UI
  */
-define(["dms", "AirspaceCalculator"], function (DmsCoordinates, AirspaceCalculator) {
 
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define(["dms", "AirspaceCalculator"], factory);
+	} else if (typeof exports === 'object') {
+		// Node. Does not work with strict CommonJS, but
+		// only CommonJS-like environments that support module.exports,
+		// like Node.
+		module.exports = factory(require("dms", "AirspaceCalculator"));
+	} else {
+		// Browser globals (root is window)
+		root.returnExports = factory(root.DmsCoordinates, root.AirspaceCalcuator);
+	}
+}(this, function (DmsCoordinates, AirspaceCalculator) {
+
+	/**
+	 * @typedef {HTMLFormElement} AirspaceCalculatorForm
+	 * 
+	 */
+
+	// Just return a value to define the module export.
+	// This example returns an object, but the module
+	// can return a function as the exported value.
 	/**
 	 * Creates a button
 	 * @param {Object} options
@@ -78,7 +100,7 @@ define(["dms", "AirspaceCalculator"], function (DmsCoordinates, AirspaceCalculat
 		for (var name in options) {
 			/*jshint eqnull:true*/
 			if (options.hasOwnProperty(name) && !ignoredOptionNames.test(options[name]) && options[name] != null) {
-			/*jshint eqnull:false*/
+				/*jshint eqnull:false*/
 				propVal = options[name];
 				if (propVal instanceof RegExp) {
 					input.setAttribute(name, propVal.source);
@@ -110,13 +132,10 @@ define(["dms", "AirspaceCalculator"], function (DmsCoordinates, AirspaceCalculat
 		form = document.createElement("form");
 		form.classList.add("airspace-calculator");
 
-		Object.defineProperty(this, "form", {
-			get: function () {
-				return form;
-			}
-		});
-
 		Object.defineProperties(this, {
+			form: {
+				value: form
+			},
 			airspaceCalculator: {
 				value: airspaceCalc
 			},
@@ -265,4 +284,4 @@ define(["dms", "AirspaceCalculator"], function (DmsCoordinates, AirspaceCalculat
 	}
 
 	return UI;
-});
+}));
