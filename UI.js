@@ -1,4 +1,4 @@
-﻿/*global define*/
+﻿/*global define, require, module*/
 
 /**
  * Provides Airspace Calculator UI
