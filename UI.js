@@ -22,7 +22,31 @@
 
 	/**
 	 * @typedef {HTMLFormElement} AirspaceCalculatorForm
-	 * 
+	 * @property {HTMLInputElement} x
+	 * @property {HTMLInputElement} y
+	 * @property {HTMLInputElement} height
+	 */
+
+	/**
+	 * @event AirspaceCalculatorForm#add-from-map
+	 * @type {CustomEvent}
+	 */
+
+	/**
+	 * @event AirspaceCalculatorForm#clear-graphics
+	 * @type {CustomEvent}
+	 */
+
+	/**
+	 * @event AirspaceCalculatorForm#calculation-complete
+	 * @type {CustomEvent}
+	 * @property {AirspaceCalculatorResult} detail
+	 */
+
+	/**
+	 * @event AirspaceCalculatorForm#calculation-error
+	 * @type {CustomEvent}
+	 * @property {Error} detail
 	 */
 
 	// Just return a value to define the module export.
@@ -133,6 +157,7 @@
 		form.classList.add("airspace-calculator");
 
 		Object.defineProperties(this, {
+			/** @property {AirspaceCalculatorForm} */
 			form: {
 				value: form
 			},

@@ -1,5 +1,10 @@
 ﻿/*global define, module*/
-// if the module has no dependencies, the above pattern can be simplified to
+
+/**
+ * Calculates surface penetrations
+ * @module AirspaceCalculator
+ */
+
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
@@ -157,20 +162,25 @@
 		}
 
 		Object.defineProperties(this, {
+			/** @member {number} */
 			agl: {
 				value: agl
 			},
+			/** @member {number} */
 			surfaceElevation: {
 				value: surfaceElevation
 			},
+			/** @member {number} */
 			terrainElevation: {
 				value: terrainElevation
 			},
+			/** @member {number} */
 			distanceFromSurface: {
 				get: function () {
 					return this.surfaceElevation - this.terrainElevation;
 				}
 			},
+			/** @member {number} */
 			penetrationOfSurface: {
 				get: function () {
 					return this.agl - this.distanceFromSurface;
@@ -180,12 +190,19 @@
 	}
 
 	/**
+	 * @typedef {Object} AirspaceCalculatorResult
+	 * @property {SurfacePenetrationInfo} surfacePenetration
+	 * @property {NedElevationInfo} terrainInfo
+	 * @property {number[]} xy - An array containing two number elements: X and Y values.
+	 */
+
+	/**
 	 * Performs calculation
 	 * @param {number} x
 	 * @param {number} y
 	 * @param {number} agl - Height above ground level (AGL) in feet.
 	 * @param {string} imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
-	 * @returns {Promise}
+	 * @returns {Promise<AirspaceCalculatorResult>}
 	 */
 	var calculateSurfacePenetration = function (x, y, agl, imageServiceUrl) {
 
@@ -209,6 +226,11 @@
 		});
 	};
 
+	/**
+	 * Calculates surface penetrations
+	 * @constructor
+	 * @alias module:AirspaceCalculator
+	 */
 	function AirspaceCalculator(imageServiceUrl) {
 		if (!imageServiceUrl) {
 			throw new TypeError("imageServiceUrl not provided");
@@ -221,10 +243,25 @@
 		});
 	}
 
+	/**
+	 * Performs calculation
+	 * @param {number} x
+	 * @param {number} y
+	 * @param {number} agl - Height above ground level (AGL) in feet.
+	 * @returns {Promise<AirspaceCalculatorResult>}
+	 */
 	AirspaceCalculator.prototype.calculate = function (x, y, agl) {
 		return calculateSurfacePenetration(x, y, agl, this.imageServiceUrl);
 	};
 
+	/**
+	 * Performs calculation
+	 * @param {number} x
+	 * @param {number} y
+	 * @param {number} agl - Height above ground level (AGL) in feet.
+	 * @param {string} imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
+	 * @returns {Promise<AirspaceCalculatorResult>}
+	 */
 	AirspaceCalculator.calculateSurfacePenetration = calculateSurfacePenetration;
 
 	return AirspaceCalculator;
