@@ -6,8 +6,10 @@ require([
 ], function (Map, ArcGISImageServiceLayer, ArcGisUI) {
 	var map, imageServiceUrl;
 
+	// Define the image service URL with airport surfaces.
 	imageServiceUrl = "http://hqolymgis99t/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer";
 
+	// Create the map.
 	map = new Map("map", {
 		basemap: "streets",
 		center: [-120.80566406246835, 47.41322033015946],
@@ -15,13 +17,19 @@ require([
 		showAttribution: true
 	});
 
+	// Create the ArcGIS Airspace Calculator UI.
 	var ui = new ArcGisUI(imageServiceUrl);
 
-	document.getElementById("tools").appendChild(ui.form);
+	// Insert the UI's <form> into the "tools" div as the first element.
+	var toolsDiv = document.getElementById("tools");
+	toolsDiv.insertBefore(ui.form, toolsDiv.firstChild);
 
+	// Once the map has loaded...
 	map.on("load", function () {
+		// Assign the AirspaceCalculator/ArcGisUI's map property.
 		ui.map = map;
 
+		// You can add the image service to the map, but it's not necessary for the airspace calculator to function.
 		map.addLayer(new ArcGISImageServiceLayer(imageServiceUrl, {
 			id: "surfaces",
 			opacity: 0.5

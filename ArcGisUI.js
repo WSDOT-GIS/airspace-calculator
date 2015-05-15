@@ -215,6 +215,10 @@ define([
 						console.log("acResult", graphic);
 					});
 
+					this.form.addEventListener("clear-graphics", function () {
+						resultLayer.clear();
+					});
+
 					var symbol = new SimpleMarkerSymbol();
 					symbol.setColor("red");
 					var renderer = new createRenderer();

@@ -48,24 +48,7 @@ body {
 
 .github-link {
     text-align: center;
-    width: 126px;
-    position: absolute;
-    bottom: 39px;
-    left: -43px;
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-    background-color: black;
-    padding: 0.2em 2em;
 }
-
-.github-link > a {
-    color: white;
-}
-
-
 .map-progress {
     display: none;
     position: absolute;
