@@ -1,4 +1,4 @@
-﻿/*global self, importScripts, AirspaceCalculator*/
+/*global self, importScripts, AirspaceCalculator*/
 
 importScripts('AirspaceCalculator.js');
 

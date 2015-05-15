@@ -42,7 +42,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="ac-worker.js" />
+    <Content Include="AirspaceCalculator.css" />
     <Content Include="AirspaceCalculator.js" />
+    <Content Include="AirspaceCalculator.min.css">
+      <DependentUpon>AirspaceCalculator.css</DependentUpon>
+    </Content>
     <Content Include="ArcGisUI.js" />
     <Content Include="bower_components\customevent-polyfill\customevent-polyfill.js" />
     <Content Include="bower_components\customevent-polyfill\customevent-polyfill.min.js" />

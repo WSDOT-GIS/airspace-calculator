@@ -1,4 +1,4 @@
-﻿/*global define*/
+/*global define*/
 
 /**
  * Airspace Calculator for use with ArcGIS API for JavaScript.
