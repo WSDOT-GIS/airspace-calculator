@@ -84,7 +84,7 @@
 
 		captionSpan = document.createElement("span");
 		if (typeof options.caption === "string") {
-			captionSpan.innerText = options.caption;
+			captionSpan.textContent = options.caption;
 		} else if (options.caption instanceof HTMLElement) {
 			captionSpan.appendChild(options.caption);
 		}

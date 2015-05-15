@@ -23,7 +23,7 @@ body {
 
     /* Explicitly size both panels */
 
-    /*#flexcontainer > div:last-child {
+    #flexcontainer > div:last-child {
         -ms-flex: 1;
         flex: 1;
     }
@@ -31,14 +31,14 @@ body {
     #flexcontainer > :first-child {
         -ms-flex: 3;
         flex: 3;
-    }*/
+    }
 
     /* Set map panel to take up remaining space. */
 
-    #flexcontainer > :first-child {
+    /*#flexcontainer > :first-child {
         -ms-flex: 1;
         flex: 1;
-    }
+    }*/
 
 #tools {
     overflow-y: auto;
