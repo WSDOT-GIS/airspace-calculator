@@ -1,4 +1,4 @@
-﻿Airspace Calculator
+Airspace Calculator
 ===================
 
 A module that will calculate surface penetration using the [USGS NED Point Query Service] and an ArcGIS [Image service].
