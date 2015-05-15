@@ -21,6 +21,11 @@
 }(this, function (DmsCoordinates, AirspaceCalculator) {
 
 	/**
+	 * @external CustomEvent
+	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent|CustomEvent}
+	 */
+
+	/**
 	 * @typedef {HTMLFormElement} AirspaceCalculatorForm
 	 * @property {HTMLInputElement} x
 	 * @property {HTMLInputElement} y
@@ -29,24 +34,30 @@
 
 	/**
 	 * @event AirspaceCalculatorForm#add-from-map
-	 * @type {CustomEvent}
+	 * @type {external:CustomEvent}
 	 */
 
 	/**
 	 * @event AirspaceCalculatorForm#clear-graphics
-	 * @type {CustomEvent}
+	 * @type {external:CustomEvent}
 	 */
 
 	/**
 	 * @event AirspaceCalculatorForm#calculation-complete
-	 * @type {CustomEvent}
+	 * @type {external:CustomEvent}
 	 * @property {AirspaceCalculatorResult} detail
 	 */
 
 	/**
 	 * @event AirspaceCalculatorForm#calculation-error
-	 * @type {CustomEvent}
+	 * @type {external:CustomEvent}
 	 * @property {Error} detail
+	 */
+
+	/**
+	 * @event AirspaceCalculatorForm#coordinates-update
+	 * @type {external:CustomEvent}
+	 * @property {DmsCoordinates} detail
 	 */
 
 	// Just return a value to define the module export.
@@ -141,6 +152,7 @@
 		return docFrag;
 	}
 
+
 	/**
 	 * UI for the AirspaceCalculator
 	 * @constructor
@@ -152,6 +164,33 @@
 
 		var airspaceCalc = new AirspaceCalculator(imageServiceUrl);
 
+		var coordinateBlur = function () {
+			var x, y, form, dms;
+			form = this.form;
+
+			// Parse to coordinates.
+			x = DmsCoordinates.parseDms(form.x.value);
+			y = DmsCoordinates.parseDms(form.y.value);
+
+			// Create a DmsCoordinates object to ensure values are valid.
+			try {
+				dms = new DmsCoordinates(y, x);
+			} catch (err) {
+				// Set to null if not valid.
+				dms = null;
+			}
+
+			////if (dms) {
+			////	form.x.value = dms.longitude;
+			////	form.y.value = dms.latitude;
+			////}
+
+			var evt = new CustomEvent("coordinates-update", {
+				detail: dms
+			});
+
+			form.dispatchEvent(evt);
+		};
 
 
 		form = document.createElement("form");
@@ -162,9 +201,11 @@
 			form: {
 				value: form
 			},
+			/** @property {AirspaceCalculator} */
 			airspaceCalculator: {
 				value: airspaceCalc
 			},
+			/** @property {string} */
 			imageServiceUrl: {
 				value: imageServiceUrl
 			}
@@ -285,30 +326,48 @@
 
 		form.appendChild(div);
 
-
+		form.x.addEventListener("blur", coordinateBlur);
+		form.y.addEventListener("blur", coordinateBlur);
 
 
 		// Disable default form submission behavior (which is to navigate away from current page)
 		form.onsubmit = function () {
-			var x, y, agl;
+			var x, y, agl, dms;
 
-			x = Number(form.x.value);
-			y = Number(form.y.value);
-			agl = Number(form.height.value);
+			x = DmsCoordinates.parseDms(form.x.value);
+			y = DmsCoordinates.parseDms(form.y.value);
+			try {
+				dms = new DmsCoordinates(y, x);
+			} catch (e) {
+				dms = null;
+				alert("Invalid coordinates");
+			}
 
-			airspaceCalc.calculate(x, y, agl).then(function (response) {
-				var evt = new CustomEvent("calculation-complete", {
-					detail: response
+			if (dms) {
+				agl = Number(form.height.value);
+
+				airspaceCalc.calculate(x, y, agl).then(function (response) {
+					var evt = new CustomEvent("calculation-complete", {
+						detail: response
+					});
+					form.dispatchEvent(evt);
+				}, function (error) {
+					var evt = new CustomEvent("calculation-error", {
+						detail: error
+					});
+					form.dispatchEvent(evt);
 				});
-				form.dispatchEvent(evt);
-			}, function (error) {
-				var evt = new CustomEvent("calculation-error", {
-					detail: error
-				});
-				form.dispatchEvent(evt);
-			});
+			}
 			return false;
 		};
+
+		form.addEventListener("reset", function () {
+			var evt = new CustomEvent("coordinates-update", {
+				detail: null
+			});
+
+			form.dispatchEvent(evt);
+		});
 	}
 
 	return UI;
