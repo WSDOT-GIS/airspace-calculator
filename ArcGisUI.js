@@ -249,7 +249,6 @@ define([
 						var acResult = e.detail;
 						var graphic = acResultToGraphic(acResult);
 						resultLayer.add(graphic);
-						console.log("acResult", graphic);
 						updateMapMarker();
 					});
 
@@ -270,6 +269,16 @@ define([
 						infoTemplate: infoTemplate
 					});
 					resultLayer.setRenderer(renderer);
+
+					resultLayer.on("graphic-add", function (e) {
+						var graphic = e ? e.graphic || null : null;
+						var geometry;
+						if (graphic) {
+							geometry = graphic.geometry;
+							self._map.infoWindow.setFeatures([graphic]);
+							self._map.infoWindow.show(geometry);
+						}
+					});
 
 					this._map.addLayer(resultLayer);
 				}
