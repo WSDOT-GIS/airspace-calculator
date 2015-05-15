@@ -360,6 +360,14 @@
 			}
 			return false;
 		};
+
+		form.addEventListener("reset", function () {
+			var evt = new CustomEvent("coordinates-update", {
+				detail: null
+			});
+
+			form.dispatchEvent(evt);
+		});
 	}
 
 	return UI;

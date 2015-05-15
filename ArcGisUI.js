@@ -6,6 +6,7 @@
  */
 define([
 	"AirspaceCalculator/UI",
+	"dms",
 
 	"dojo/_base/Color",
 
@@ -19,6 +20,7 @@ define([
 	"esri/InfoTemplate"
 ], function (
 	UI,
+	DmsCoordinates,
 	Color,
 	Draw,
 	GraphicsLayer,
@@ -53,6 +55,8 @@ define([
 		});
 		return renderer;
 	}
+
+	var mapMarkerSymbol = new SimpleMarkerSymbol();
 
 	/**
 	 * Converts feet to meters
@@ -186,6 +190,36 @@ define([
 		this._map = null;
 		this._draw = null;
 		var resultLayer = null;
+		var markerGraphic = null;
+
+		var markerLayer;
+
+		function updateMapMarker(dmsCoordinates) {
+			var point;
+			if (dmsCoordinates) {
+				point = dmsCoordinates instanceof Point ? dmsCoordinates : new Point({
+					x: dmsCoordinates.longitude.dd,
+					y: dmsCoordinates.latitude.dd,
+					spatialReference: {
+						wkid: 4326
+					}
+				});
+				if (!markerGraphic) {
+					markerGraphic = new Graphic(point, mapMarkerSymbol);
+					markerLayer.add(markerGraphic);
+				} else {
+					markerGraphic.setGeometry(point);
+				}
+				markerLayer.refresh();
+			} else {
+				// Remove existing marker
+				if (markerGraphic) {
+					markerLayer.remove(markerGraphic);
+					markerLayer.refresh();
+					markerGraphic = null;
+				}
+			}
+		}
 
 
 		Object.defineProperties(this, {
@@ -197,11 +231,14 @@ define([
 					var self = this;
 					this._map = value;
 					this._draw = new Draw(this._map);
+					markerLayer = this._map.graphics;
+
 
 					this._draw.on("draw-complete", function (drawResponse) {
 						drawResponse.target.deactivate();
 						self.form.x.value = drawResponse.geographicGeometry.x;
 						self.form.y.value = drawResponse.geographicGeometry.y;
+						updateMapMarker(drawResponse.geographicGeometry);
 					});
 
 					this.form.addEventListener("add-from-map", function () {
@@ -213,14 +250,18 @@ define([
 						var graphic = acResultToGraphic(acResult);
 						resultLayer.add(graphic);
 						console.log("acResult", graphic);
+						updateMapMarker();
 					});
 
 					this.form.addEventListener("clear-graphics", function () {
 						resultLayer.clear();
 					});
 
-					var symbol = new SimpleMarkerSymbol();
-					symbol.setColor("red");
+					this.form.addEventListener("coordinates-update", function (e) {
+						var dmsCoordinates = e ? e.detail : null;
+						updateMapMarker(dmsCoordinates);
+					});
+
 					var renderer = new createRenderer();
 					var infoTemplate = new InfoTemplate(formatTitle, formatResults);
 
