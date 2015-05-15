@@ -124,3 +124,7 @@ body {
 .airspace-calculator > .container > div > input {
     width: 100%;
 }
+
+button[type=button] span.caption {
+    display: none;
+}

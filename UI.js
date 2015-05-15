@@ -83,6 +83,7 @@
 
 
 		captionSpan = document.createElement("span");
+		captionSpan.classList.add("caption");
 		if (typeof options.caption === "string") {
 			captionSpan.textContent = options.caption;
 		} else if (options.caption instanceof HTMLElement) {
@@ -230,7 +231,8 @@
 
 		btn = createButton({
 			caption: "Get coords. from map",
-			title: "Pick coordinates by clicking a location on the map"
+			title: "Pick coordinates by clicking a location on the map",
+			iconClass: ["fa", "fa-location-arrow"]
 		});
 		mapButtons.appendChild(btn);
 
@@ -245,7 +247,8 @@
 
 		btn = createButton({
 			caption: "Clear Graphics",
-			title: "Clears graphics from the map created by this control"
+			title: "Clears graphics from the map created by this control",
+			iconClass: ["fa", "fa-trash"]
 		});
 		mapButtons.appendChild(btn);
 

@@ -31,7 +31,8 @@
   "dependencies": {
     "dms": "~1.0.1",
     "customevent-polyfill": "~1.0.0",
-    "promises": "~1.0.10"
+    "promises": "~1.0.10",
+    "fontawesome": "~4.3.0"
   },
   "devDependencies": {},
   "private": true

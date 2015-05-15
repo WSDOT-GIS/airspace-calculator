@@ -47,6 +47,9 @@
     <Content Include="bower_components\customevent-polyfill\customevent-polyfill.js" />
     <Content Include="bower_components\customevent-polyfill\customevent-polyfill.min.js" />
     <Content Include="bower_components\dms\dms.js" />
+    <Content Include="bower_components\fontawesome\css\font-awesome.css" />
+    <Content Include="bower_components\fontawesome\css\font-awesome.min.css" />
+    <Content Include="bower_components\fontawesome\fonts\fontawesome-webfont.svg" />
     <Content Include="bower_components\promises\promise.js" />
     <Content Include="bower_components\setImmediate\setimmediate.js" />
     <Content Include="demo\index.css" />
@@ -63,6 +66,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bower_components\fontawesome\css\font-awesome.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bower_components\fontawesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="bower_components\fontawesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="bower_components\fontawesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="bower_components\fontawesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="bower_components\fontawesome\fonts\FontAwesome.otf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
