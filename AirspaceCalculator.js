@@ -166,7 +166,7 @@
 			agl: {
 				value: agl
 			},
-			/** @member {number} */
+			/** @member {?number} */
 			surfaceElevation: {
 				value: surfaceElevation
 			},
@@ -174,18 +174,26 @@
 			terrainElevation: {
 				value: terrainElevation
 			},
+			/*jshint eqnull:true*/
 			/** @member {number} */
 			distanceFromSurface: {
 				get: function () {
-					return this.surfaceElevation - this.terrainElevation;
+					return surfaceElevation != null ? this.surfaceElevation - this.terrainElevation : null;
 				}
 			},
 			/** @member {number} */
 			penetrationOfSurface: {
 				get: function () {
-					return this.agl - this.distanceFromSurface;
+					return surfaceElevation != null ? this.agl - this.distanceFromSurface : null;
+				}
+			},
+			/** @member {Boolean} */
+			penetratesSurface: {
+				get: function () {
+					return this.penetrationOfSurface != null && this.penetrationOfSurface > 0;
 				}
 			}
+			/*jshint eqnull:false*/
 		});
 	}
 
