@@ -17,14 +17,6 @@ require([
 
 	var ui = new ArcGisUI(imageServiceUrl);
 
-	ui.form.addEventListener("calculation-complete", function (results) {
-		console.log("calculation-complete", results);
-	});
-
-	ui.form.addEventListener("calculation-error", function (error) {
-		console.error("calculation-error", error);
-	});
-
 	document.getElementById("tools").appendChild(ui.form);
 
 	map.on("load", function () {
