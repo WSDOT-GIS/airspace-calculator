@@ -290,23 +290,32 @@
 
 		// Disable default form submission behavior (which is to navigate away from current page)
 		form.onsubmit = function () {
-			var x, y, agl;
+			var x, y, agl, dms;
 
-			x = Number(form.x.value);
-			y = Number(form.y.value);
-			agl = Number(form.height.value);
+			x = DmsCoordinates.parseDms(form.x.value);
+			y = DmsCoordinates.parseDms(form.y.value);
+			try {
+				dms = new DmsCoordinates(y, x);
+			} catch (e) {
+				dms = null;
+				alert("Invalid coordinates");
+			}
 
-			airspaceCalc.calculate(x, y, agl).then(function (response) {
-				var evt = new CustomEvent("calculation-complete", {
-					detail: response
+			if (dms) {
+				agl = Number(form.height.value);
+
+				airspaceCalc.calculate(x, y, agl).then(function (response) {
+					var evt = new CustomEvent("calculation-complete", {
+						detail: response
+					});
+					form.dispatchEvent(evt);
+				}, function (error) {
+					var evt = new CustomEvent("calculation-error", {
+						detail: error
+					});
+					form.dispatchEvent(evt);
 				});
-				form.dispatchEvent(evt);
-			}, function (error) {
-				var evt = new CustomEvent("calculation-error", {
-					detail: error
-				});
-				form.dispatchEvent(evt);
-			});
+			}
 			return false;
 		};
 	}
