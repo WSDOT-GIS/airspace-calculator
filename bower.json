@@ -11,7 +11,9 @@
   ],
   "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
   "moduleType": [
-    "amd"
+    "amd",
+    "globals",
+    "node"
   ],
   "keywords": [
     "airspace",
@@ -26,7 +28,8 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "demo"
   ],
   "dependencies": {
     "dms": "~1.0.2",
@@ -34,6 +37,6 @@
     "promises": "~1.0.10",
     "fontawesome": "~4.3.0"
   },
-  "devDependencies": {},
-  "private": true
+  "private": true,
+  "homepage": "https://github.com/WSDOT-GIS/airspace-calculator"
 }
