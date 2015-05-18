@@ -239,6 +239,11 @@ define([
 						self.form.x.value = drawResponse.geographicGeometry.x;
 						self.form.y.value = drawResponse.geographicGeometry.y;
 						updateMapMarker(drawResponse.geographicGeometry);
+
+						var evt = new CustomEvent("draw-complete", {
+							detail: drawResponse
+						});
+						self.form.dispatchEvent(evt);
 					});
 
 					this.form.addEventListener("add-from-map", function () {
