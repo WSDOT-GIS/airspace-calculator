@@ -106,9 +106,7 @@ define([
 			spatialReference: { wkid: 4326 }
 		});
 		var graphic = new Graphic(point, null, {
-			//surfacePenetration: acResult.surfacePenetration,
-			//terrainInfo: acResult.terrainInfo
-			agl: 50,
+			agl: acResult.surfacePenetration.agl,
 			distanceFromSurface: acResult.surfacePenetration.distanceFromSurface,
 			penetrationOfSurface: acResult.surfacePenetration.penetrationOfSurface,
 			surfaceElevation: acResult.surfacePenetration.surfaceElevation,
