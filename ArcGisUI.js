@@ -106,9 +106,7 @@ define([
 			spatialReference: { wkid: 4326 }
 		});
 		var graphic = new Graphic(point, null, {
-			//surfacePenetration: acResult.surfacePenetration,
-			//terrainInfo: acResult.terrainInfo
-			agl: 50,
+			agl: acResult.surfacePenetration.agl,
 			distanceFromSurface: acResult.surfacePenetration.distanceFromSurface,
 			penetrationOfSurface: acResult.surfacePenetration.penetrationOfSurface,
 			surfaceElevation: acResult.surfacePenetration.surfaceElevation,
@@ -162,7 +160,7 @@ define([
 			"Terrain Elevation": formatFeetAsFeetAndInchesAndMeters(graphic.attributes.terrainElevation)
 		};
 		if (graphic.attributes.penetratesSurface) {
-			data["Elevation Above Terrain of <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface"] = formatFeetAsFeetAndInchesAndMeters(graphic.attributes.penetrationOfSurface);
+			data["Elevation Above Terrain of <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface"] = formatFeetAsFeetAndInchesAndMeters(graphic.attributes.distanceFromSurface);
 		}
 
 		var dt, dd;
@@ -239,6 +237,11 @@ define([
 						self.form.x.value = drawResponse.geographicGeometry.x;
 						self.form.y.value = drawResponse.geographicGeometry.y;
 						updateMapMarker(drawResponse.geographicGeometry);
+
+						var evt = new CustomEvent("draw-complete", {
+							detail: drawResponse
+						});
+						self.form.dispatchEvent(evt);
 					});
 
 					this.form.addEventListener("add-from-map", function () {

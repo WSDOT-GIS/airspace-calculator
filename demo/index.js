@@ -29,6 +29,14 @@ require([
 		// Assign the AirspaceCalculator/ArcGisUI's map property.
 		ui.map = map;
 
+		ui.form.addEventListener("draw-complete", function () {
+			map.setInfoWindowOnClick(true);
+		});
+
+		ui.form.addEventListener("add-from-map", function () {
+			map.setInfoWindowOnClick(false);
+		});
+
 		// You can add the image service to the map, but it's not necessary for the airspace calculator to function.
 		map.addLayer(new ArcGISImageServiceLayer(imageServiceUrl, {
 			id: "surfaces",
