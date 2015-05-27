@@ -74,14 +74,14 @@ define([
 	 * @returns {string}
 	 */
 	function formatAsFeetAndInches(feet) {
-		var inches = feet % 1;
+		var prime = "\u2032", doublePrime = '\u2033', inches = feet % 1;
 		feet = feet - inches;
 		inches = Math.round(inches * 12);
 		if (inches === 12) {
 			feet += 1;
 			inches = 0;
 		}
-		return inches > 0 ? [feet, "'", inches, '"'].join("") : [feet, "'"].join("");
+		return inches > 0 ? [feet, prime, inches, doublePrime].join("") : [feet, prime].join("");
 	}
 
 	/**
@@ -156,11 +156,11 @@ define([
 		output.appendChild(list);
 
 		var data = {
-			"Penetration of Surface": formatFeetAsFeetAndInchesAndMeters(graphic.attributes.penetrationOfSurface),
+			"Penetration of <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface occurred at": formatFeetAsFeetAndInchesAndMeters(graphic.attributes.penetrationOfSurface),
 			"Terrain Elevation": formatFeetAsFeetAndInchesAndMeters(graphic.attributes.terrainElevation)
 		};
 		if (graphic.attributes.penetratesSurface) {
-			data["Elevation Above <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface"] = formatFeetAsFeetAndInchesAndMeters(graphic.attributes.distanceFromSurface);
+			data["Exceeds <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface by"] = formatFeetAsFeetAndInchesAndMeters(graphic.attributes.distanceFromSurface);
 		}
 
 		var dt, dd;
