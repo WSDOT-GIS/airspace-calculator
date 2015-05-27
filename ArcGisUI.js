@@ -162,7 +162,7 @@ define([
 			"Terrain Elevation": formatFeetAsFeetAndInchesAndMeters(graphic.attributes.terrainElevation)
 		};
 		if (graphic.attributes.penetratesSurface) {
-			data["Elevation Above Terrain of <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface"] = formatFeetAsFeetAndInchesAndMeters(graphic.attributes.penetrationOfSurface);
+			data["Elevation Above Terrain of <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface"] = formatFeetAsFeetAndInchesAndMeters(graphic.attributes.distanceFromSurface);
 		}
 
 		var dt, dd;
