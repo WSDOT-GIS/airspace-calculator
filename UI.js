@@ -223,7 +223,8 @@
 			pattern: DmsCoordinates.dmsRe.source,
 			placeholder: "longitude",
 			title: "Longitude in dec. degrees or DMS format.",
-			required: "required"
+			required: "required",
+			autocomplete: "on"
 		});
 		div = document.createElement("div");
 		div.appendChild(frag);
@@ -240,7 +241,8 @@
 			pattern: DmsCoordinates.dmsRe.source,
 			placeholder: "latitude",
 			title: "Latitude in dec. degrees or DMS format.",
-			required: "required"
+			required: "required",
+			autocomplete: "on"
 		});
 		div = document.createElement("div");
 		div.appendChild(frag);

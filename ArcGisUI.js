@@ -156,11 +156,11 @@ define([
 		output.appendChild(list);
 
 		var data = {
-			"Penetration of <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface occurred at": formatFeetAsFeetAndInchesAndMeters(graphic.attributes.penetrationOfSurface),
+			"Penetration of <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface occurred at": formatFeetAsFeetAndInchesAndMeters(graphic.attributes.distanceFromSurface),
 			"Terrain Elevation": formatFeetAsFeetAndInchesAndMeters(graphic.attributes.terrainElevation)
 		};
 		if (graphic.attributes.penetratesSurface) {
-			data["Exceeds <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface by"] = formatFeetAsFeetAndInchesAndMeters(graphic.attributes.distanceFromSurface);
+			data["Structure Exceeds <abbr title='Federal Aviation Regulations'>FAR</abbr> Surface by"] = formatFeetAsFeetAndInchesAndMeters(graphic.attributes.penetrationOfSurface);
 		}
 
 		var dt, dd;
