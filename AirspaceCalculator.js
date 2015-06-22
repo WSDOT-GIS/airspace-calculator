@@ -38,7 +38,7 @@
 	 */
 	function getElevation(x, y, units) {
 		return new Promise(function (resolve, reject) {
-			var baseUrl = "http://ned.usgs.gov/epqs/pqs.php";
+			var baseUrl = "http://nationalmap.gov/epqs/pqs.php";
 			var params = {
 				x: x,
 				y: y,
@@ -47,7 +47,7 @@
 			};
 			var request = new XMLHttpRequest();
 			request.open("get", [baseUrl, objectToQueryString(params)].join("?"));
-			request.onloadend = function () {
+			request.onloadend = function (e) {
 				/*
 				{
 					"USGS_Elevation_Point_Query_Service": {
@@ -61,8 +61,12 @@
 					}
 				}
 				 */
-				var response = JSON.parse(this.responseText);
-				resolve(response.USGS_Elevation_Point_Query_Service.Elevation_Query);
+				if (this.status === 200) {
+					var response = JSON.parse(this.responseText);
+					resolve(response.USGS_Elevation_Point_Query_Service.Elevation_Query);
+				} else {
+					reject(e);
+				}
 			};
 			request.onerror = function (e) {
 				reject(e);

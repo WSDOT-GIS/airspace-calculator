@@ -20,6 +20,10 @@ require([
 	// Create the ArcGIS Airspace Calculator UI.
 	var ui = new ArcGisUI(imageServiceUrl);
 
+	ui.form.addEventListener("calculation-error", function (e) {
+		console.error("calculation error", e);
+	});
+
 	// Insert the UI's <form> into the "tools" div as the first element.
 	var toolsDiv = document.getElementById("tools");
 	toolsDiv.insertBefore(ui.form, toolsDiv.firstChild);
