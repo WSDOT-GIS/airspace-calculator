@@ -56,6 +56,7 @@
     <Content Include="bower_components\fontawesome\fonts\fontawesome-webfont.svg" />
     <Content Include="bower_components\promises\promise.js" />
     <Content Include="bower_components\setImmediate\setimmediate.js" />
+    <Content Include="bower_components\usgs-ned\usgsNed.js" />
     <Content Include="demo\index.css" />
     <Content Include="demo\index.html" />
     <Content Include="demo\index.js" />
