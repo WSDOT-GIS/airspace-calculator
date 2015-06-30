@@ -36,7 +36,7 @@
     "customevent-polyfill": "~1.0.0",
     "promises": "~1.0.10",
     "fontawesome": "~4.3.0",
-    "usgs-ned": "~1.0.1"
+    "usgs-ned": "~1.0.2"
   },
   "private": true,
   "homepage": "https://github.com/WSDOT-GIS/airspace-calculator"
