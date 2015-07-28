@@ -19,6 +19,7 @@ require([
 
 	// Create the ArcGIS Airspace Calculator UI.
 	var ui = new ArcGisUI(imageServiceUrl);
+	ui.zoomLevel = 11;
 
 	ui.form.addEventListener("calculation-error", function (e) {
 		console.error("calculation error", e);
