@@ -280,6 +280,7 @@ define([
 							geometry = graphic.geometry;
 							self._map.infoWindow.setFeatures([graphic]);
 							self._map.infoWindow.show(geometry);
+							self._map.centerAndZoom(geometry, 12);
 						}
 					});
 
