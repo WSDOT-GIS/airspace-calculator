@@ -5,7 +5,7 @@
     "UI.js",
     "ArcGisUI.js"
   ],
-  "version": "0.1.0",
+  "version": "1.1.0",
   "authors": [
     "WSDOT"
   ],
@@ -35,7 +35,8 @@
     "dms": "~1.0.2",
     "customevent-polyfill": "~1.0.0",
     "promises": "~1.0.10",
-    "fontawesome": "~4.3.0"
+    "fontawesome": "~4.3.0",
+    "usgs-ned": "~1.0.2"
   },
   "private": true,
   "homepage": "https://github.com/WSDOT-GIS/airspace-calculator"

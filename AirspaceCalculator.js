@@ -1,4 +1,4 @@
-/*global define, module*/
+/*global define, module, require*/
 
 /**
  * Calculates surface penetrations
@@ -8,17 +8,17 @@
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
-		define([], factory);
+		define(["usgsNed"], factory);
 	} else if (typeof exports === 'object') {
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like environments that support module.exports,
 		// like Node.
-		module.exports = factory();
+		module.exports = factory(require("usgsNed"));
 	} else {
 		// Browser globals (root is window)
-		root.AirspaceCalculator = factory();
+		root.AirspaceCalculator = factory(root.usgsNed);
 	}
-}(this, function () {
+}(this, function (usgsNed) {
 	/**
 	 * @typedef NedElevationInfo
 	 * @property {number} x
@@ -27,49 +27,6 @@
 	 * @property {number} Elevation
 	 * @property {string} Units - 'Feet' or 'Meters'
 	 */
-
-
-	/**
-	 * Creates a request to the USGS NED point service
-	 * @param {number} x
-	 * @param {number} y
-	 * @param {string} [units='Feet']
-	 * @returns {Promise<NedElevationInfo>}
-	 */
-	function getElevation(x, y, units) {
-		return new Promise(function (resolve, reject) {
-			var baseUrl = "http://ned.usgs.gov/epqs/pqs.php";
-			var params = {
-				x: x,
-				y: y,
-				units: units || "Feet",
-				output: "json"
-			};
-			var request = new XMLHttpRequest();
-			request.open("get", [baseUrl, objectToQueryString(params)].join("?"));
-			request.onloadend = function () {
-				/*
-				{
-					"USGS_Elevation_Point_Query_Service": {
-						"Elevation_Query": {
-							"x": -123,
-							"y": 45,
-							"Data_Source": "NED 1/3 arc-second",
-							"Elevation": 177.965854,
-							"Units": "Feet"
-						}
-					}
-				}
-				 */
-				var response = JSON.parse(this.responseText);
-				resolve(response.USGS_Elevation_Point_Query_Service.Elevation_Query);
-			};
-			request.onerror = function (e) {
-				reject(e);
-			};
-			request.send();
-		});
-	}
 
 	/**
 	 * @external ArcGisPoint
@@ -214,7 +171,7 @@
 	 */
 	var calculateSurfacePenetration = function (x, y, agl, imageServiceUrl) {
 
-		var elevationPromise = getElevation(x, y);
+		var elevationPromise = usgsNed.getElevation(x, y);
 		var identifyPromise = identify(x, y, imageServiceUrl);
 
 		return new Promise(function (resolve, reject) {

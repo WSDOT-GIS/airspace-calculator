@@ -7,7 +7,7 @@ require([
 	var map, imageServiceUrl;
 
 	// Define the image service URL with airport surfaces.
-	imageServiceUrl = "http://hqolymgis99t/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer";
+	imageServiceUrl = "http://data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer";
 
 	// Create the map.
 	map = new Map("map", {
@@ -19,6 +19,11 @@ require([
 
 	// Create the ArcGIS Airspace Calculator UI.
 	var ui = new ArcGisUI(imageServiceUrl);
+	ui.zoomLevel = 11;
+
+	ui.form.addEventListener("calculation-error", function (e) {
+		console.error("calculation error", e);
+	});
 
 	// Insert the UI's <form> into the "tools" div as the first element.
 	var toolsDiv = document.getElementById("tools");
