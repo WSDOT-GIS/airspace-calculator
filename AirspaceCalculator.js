@@ -13,12 +13,13 @@
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like environments that support module.exports,
 		// like Node.
-		module.exports = factory(require("./SurfacePenetrationInfo"), require("usgsNed"));
+		fetch = require("node-fetch");
+		module.exports = factory(require("./SurfacePenetrationInfo"), require("usgs-ned"));
 	} else {
 		// Browser globals (root is window)
-		root.AirspaceCalculator = factory(root.usgsNed);
+		root.AirspaceCalculator = factory(root.SurfacePenetrationInfo, root.usgsNed);
 	}
-}(this, function (SurfacePenetrationInfo, usgsNed) {
+} (this, function (SurfacePenetrationInfo, usgsNed) {
 	/**
 	 * @typedef NedElevationInfo
 	 * @property {number} x
@@ -85,22 +86,14 @@
 		// Add the query string URL.
 		imageServerUrl = [imageServerUrl, objectToQueryString(params)].join("?");
 
-		return new Promise(function (resolve, reject) {
-			var request = new XMLHttpRequest();
-			request.open("get", imageServerUrl);
-			request.onloadend = function () {
-				var response = JSON.parse(this.responseText);
-				var pixelValue = response.value;
-				var number = Number(pixelValue);
-				// Return the number, or pixel value if not a number.
-				resolve(isNaN(number) ? pixelValue : number);
-			};
-			request.onerror = function (e) {
-				reject(e);
-			};
-			request.send();
+		return fetch(imageServerUrl).then(function (response) {
+			return response.json();
+		}).then(function (json) {
+			var pixelValue = json.value;
+			var n = Number(pixelValue);
+			// Return the number, or pixel value if not a number.
+			return isNaN(n) ? pixelValue : n;
 		});
-
 	}
 
 	/**
@@ -127,12 +120,12 @@
 			Promise.all([elevationPromise, identifyPromise]).then(function (/**{Promise[]}*/ promises) {
 				var terrainResponse, surfaceElevation;
 				terrainResponse = promises[0];
-				surfaceElevation = typeof promises[1] === "number" ? promises[1]: null;
+				surfaceElevation = typeof promises[1] === "number" ? promises[1] : null;
 				var spInfo = new SurfacePenetrationInfo(agl, surfaceElevation, terrainResponse.Elevation);
 				resolve({
 					surfacePenetration: spInfo,
 					terrainInfo: terrainResponse,
-					xy: [x,y]
+					xy: [x, y]
 				});
 			}, function (error) {
 				reject(error);

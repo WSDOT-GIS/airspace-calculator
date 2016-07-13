@@ -5,17 +5,19 @@
     "UI.js",
     "ArcGisUI.js"
   ],
-  "version": "1.1.0",
   "authors": [
     "WSDOT"
   ],
-  "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
+  "description": "Determine if a structure can be erected at a given height. Also provides UI controls.",
   "moduleType": [
     "amd",
     "globals",
     "node"
   ],
   "keywords": [
+    "arcgis",
+    "usgs",
+    "elevation",
     "airspace",
     "calculator",
     "arcgis"
