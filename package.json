@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "node-fetch": "^1.5.3",
-    "usgs-ned": "git+https://github.com/WSDOT-GIS/usgs-ned.git"
+    "usgs-ned": "~2.0.1"
   }
 }
