@@ -3,6 +3,8 @@
 bower_components
 typings
 
+.vscode/iis*.json
+
 # User-specific files
 *.suo
 *.user

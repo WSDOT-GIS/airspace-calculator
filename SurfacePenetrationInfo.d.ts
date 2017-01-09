@@ -1,32 +1,18 @@
 /**
- * Provides information about surface penetration.
- * @param {number} agl
- * @param {number} surfaceElevation
- * @param {number} terrainElevation
- * @alias module:SurfacePenetrationInfo
+ * SurfacePenetrationInfo module
  */
-declare class SurfacePenetrationInfo {
-	constructor(agl:number, surfaceElevation:number, terrainElevation:number);
-
-	/** @member {number} */
-	agl: number;
-	/** @member {?number} */
-	surfaceElevation: number
-	/** @member {number} */
-	terrainElevation: number;
-	/*jshint eqnull:true*/
-	/** @member {number} */
-	distanceFromSurface: {
-		get(): number;
-	}
-	/** @member {number} */
-	penetrationOfSurface: {
-		get(): number;
-	};
-	/** @member {Boolean} */
-	penetratesSurface: {
-		get(): boolean;
-	}
-	/*jshint eqnull:false*/
-
+/**
+ * Provides information about surface penetration.
+ */
+export default class SurfacePenetrationInfo {
+    private _agl;
+    private _surfaceElevation;
+    private _terrainElevation;
+    constructor(agl: number, surfaceElevation: number | string | null, terrainElevation: number);
+    readonly agl: number;
+    readonly surfaceElevation: number | null;
+    readonly terrainElevation: number;
+    readonly distanceFromSurface: number | null;
+    readonly penetrationOfSurface: number | null;
+    readonly penetratesSurface: boolean;
 }
