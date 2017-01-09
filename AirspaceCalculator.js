@@ -113,7 +113,7 @@
 	 */
 	var calculateSurfacePenetration = function (x, y, agl, imageServiceUrl) {
 
-		var elevationPromise = usgsNed.getElevation(x, y);
+		var elevationPromise = usgsNed.default(x, y);
 		var identifyPromise = identify(x, y, imageServiceUrl);
 
 		return new Promise(function (resolve, reject) {

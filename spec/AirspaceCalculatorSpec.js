@@ -13,7 +13,11 @@ describe("Airspace Calculator", () => {
             let xy = acResult.xy;
             expect(acResult.xy.length).toEqual(2, "The xy property should have two elements");
             expect(typeof xy[0] === "number" && typeof xy[1] === "number");
+            expect(isNaN(xy[0])).toEqual(false);
+            expect(isNaN(xy[1])).toEqual(false);
             done();
+        }, error => {
+            done.fail(error);
         });
     });
 });

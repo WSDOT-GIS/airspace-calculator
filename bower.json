@@ -1,5 +1,5 @@
 {
-  "name": "AirspaceCalculator",
+  "name": "airspace-calculator",
   "main": "AirspaceCalculator.js",
   "authors": [
     "WSDOT"
@@ -30,11 +30,11 @@
     "demo"
   ],
   "dependencies": {
-    "dms": "~1.0.2",
+    "dms": "~2.0.1",
     "customevent-polyfill": "~1.0.0",
     "promises": "~1.0.10",
-    "fontawesome": "~4.3.0",
-    "usgs-ned": "~2.0.1"
+    "fontawesome": "~4.7.0",
+    "usgs-ned": "~3.0.0"
   },
   "private": true,
   "homepage": "https://github.com/WSDOT-GIS/airspace-calculator"
