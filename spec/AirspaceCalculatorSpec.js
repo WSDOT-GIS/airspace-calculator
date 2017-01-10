@@ -1,5 +1,5 @@
 describe("Airspace Calculator", () => {
-    let AirspaceCalculator = require("../AirspaceCalculator");
+    let AirspaceCalculator = require("../AirspaceCalculator").default;
 
     it("should be able to calculate", (done) => {
         let ac = new AirspaceCalculator("http://data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer");

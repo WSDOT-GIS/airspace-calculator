@@ -32,6 +32,7 @@
     "typescript": "^2.1.4"
   },
   "dependencies": {
+    "dms-conversion": "^2.0.4",
     "node-fetch": "^1.6.3",
     "usgs-ned": "~3.0.1"
   }
