@@ -7,6 +7,24 @@
     "preinstall": "tsc",
     "test": "jasmine"
   },
+  "files": [
+    "ac-worker.js",
+    "AirspaceCalculator.d.ts",
+    "AirspaceCalculator.d.ts",
+    "AirspaceCalculator.js.map",
+    "AirspaceCalculator.ts",
+    "ArcGisUI.js",
+    "SurfacePenetrationInfo.d.ts",
+    "SurfacePenetrationInfo.d.ts",
+    "SurfacePenetrationInfo.js",
+    "SurfacePenetrationInfo.js.map",
+    "SurfacePenetrationInfo.ts",
+    "UI.d.ts",
+    "UI.d.ts",
+    "UI.js",
+    "UI.js.map",
+    "UI.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WSDOT-GIS/airspace-calculator.git"
@@ -35,6 +53,6 @@
   "dependencies": {
     "dms-conversion": "^3.0.0",
     "node-fetch": "^1.6.3",
-    "usgs-ned": "~3.0.1"
+    "usgs-ned": "~3.0.2"
   }
 }

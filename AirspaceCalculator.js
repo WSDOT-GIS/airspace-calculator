@@ -9,9 +9,9 @@
     else if (typeof define === 'function' && define.amd) {
         define(dependencies, factory);
     }
-})(["require", "exports", "usgs-ned/usgsNed", "./SurfacePenetrationInfo"], function (require, exports) {
+})(["require", "exports", "usgs-ned", "./SurfacePenetrationInfo"], function (require, exports) {
     "use strict";
-    var usgsNed_1 = require("usgs-ned/usgsNed");
+    var usgs_ned_1 = require("usgs-ned");
     var SurfacePenetrationInfo_1 = require("./SurfacePenetrationInfo");
     /**
      * @external ArcGisPoint
@@ -80,7 +80,7 @@
      * @returns {Promise<AirspaceCalculatorResult>}
      */
     var calculateSurfacePenetration = function (x, y, agl, imageServiceUrl) {
-        var elevationPromise = usgsNed_1.default(x, y);
+        var elevationPromise = usgs_ned_1.default(x, y);
         var identifyPromise = identify(x, y, imageServiceUrl);
         return new Promise(function (resolve, reject) {
             Promise.all([elevationPromise, identifyPromise]).then(function (promises) {
@@ -134,3 +134,4 @@
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = AirspaceCalculator;
 });
+//# sourceMappingURL=AirspaceCalculator.js.map

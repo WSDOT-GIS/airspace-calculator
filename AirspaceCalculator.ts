@@ -3,7 +3,7 @@
  * @module AirspaceCalculator
  */
 
-import getElevation from "usgs-ned/usgsNed";
+import getElevation from "usgs-ned";
 import ElevationQueryResponse from "usgs-ned/ElevationQueryResult";
 import SurfacePenetrationInfo from "./SurfacePenetrationInfo";
 
