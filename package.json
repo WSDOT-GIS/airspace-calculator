@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/arcgis-js-api": "^3.19.0",
     "@types/geojson": "0.0.31",
+    "@types/jasmine": "^2.5.40",
     "@types/whatwg-fetch": "0.0.33",
     "jasmine": "^2.5.2",
     "tslint": "^4.3.1",

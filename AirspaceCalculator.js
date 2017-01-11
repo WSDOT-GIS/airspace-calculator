@@ -72,12 +72,6 @@
         });
     }
     /**
-     * @typedef {Object} AirspaceCalculatorResult
-     * @property {SurfacePenetrationInfo} surfacePenetration
-     * @property {NedElevationInfo} terrainInfo
-     * @property {number[]} xy - An array containing two number elements: X and Y values.
-     */
-    /**
      * Performs calculation
      * @param x - X
      * @param y - Y

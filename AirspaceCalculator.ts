@@ -4,6 +4,7 @@
  */
 
 import getElevation from "usgs-ned/usgsNed";
+import ElevationQueryResponse from "usgs-ned/ElevationQueryResult";
 import SurfacePenetrationInfo from "./SurfacePenetrationInfo";
 
 /**
@@ -78,6 +79,12 @@ function identify(x: number, y: number, imageServerUrl: string): Promise<number 
  * @property {number[]} xy - An array containing two number elements: X and Y values.
  */
 
+export interface AirspaceCalculatorResult {
+    surfacePenetration: SurfacePenetrationInfo;
+    terrainInfo: ElevationQueryResponse;
+    xy: [number, number]
+}
+
 /**
  * Performs calculation
  * @param x - X
@@ -86,7 +93,7 @@ function identify(x: number, y: number, imageServerUrl: string): Promise<number 
  * @param imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
  * @returns {Promise<AirspaceCalculatorResult>}
  */
-let calculateSurfacePenetration = function (x: number, y: number, agl: number, imageServiceUrl: string) {
+let calculateSurfacePenetration = function (x: number, y: number, agl: number, imageServiceUrl: string): Promise<AirspaceCalculatorResult> {
 
     let elevationPromise = getElevation(x, y);
     let identifyPromise = identify(x, y, imageServiceUrl);
