@@ -5,7 +5,7 @@
  * @module AirspaceCalculator/UI
  */
 
-import { parseDms, default as DmsCoordinates } from "dms-conversion/dms";
+import { parseDms, default as DmsCoordinates } from "dms-conversion";
 import AirspaceCalculator from "./AirspaceCalculator";
 
 

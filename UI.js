@@ -6,13 +6,13 @@
     else if (typeof define === 'function' && define.amd) {
         define(dependencies, factory);
     }
-})(["require", "exports", "dms-conversion/dms", "./AirspaceCalculator"], function (require, exports) {
+})(["require", "exports", "dms-conversion", "./AirspaceCalculator"], function (require, exports) {
     "use strict";
     /**
      * Provides Airspace Calculator UI
      * @module AirspaceCalculator/UI
      */
-    var dms_1 = require("dms-conversion/dms");
+    var dms_conversion_1 = require("dms-conversion");
     var AirspaceCalculator_1 = require("./AirspaceCalculator");
     // Just return a value to define the module export.
     // This example returns an object, but the module
@@ -100,12 +100,12 @@
             var coordinateBlur = function () {
                 var form = this.form;
                 // Parse to coordinates.
-                var x = dms_1.parseDms(form.x.value);
-                var y = dms_1.parseDms(form.y.value);
+                var x = dms_conversion_1.parseDms(form.x.value);
+                var y = dms_conversion_1.parseDms(form.y.value);
                 var dms;
                 // Create a DmsCoordinates object to ensure values are valid.
                 try {
-                    dms = new dms_1.default(y, x);
+                    dms = new dms_conversion_1.default(y, x);
                 }
                 catch (err) {
                     // Set to null if not valid.
@@ -123,20 +123,6 @@
             var form = document.createElement("form");
             this._form = form;
             form.classList.add("airspace-calculator");
-            // Object.defineProperties(this, {
-            //     /** @property {AirspaceCalculatorForm} */
-            //     form: {
-            //         value: form
-            //     },
-            //     /** @property {AirspaceCalculator} */
-            //     airspaceCalculator: {
-            //         value: airspaceCalc
-            //     },
-            //     /** @property {string} */
-            //     imageServiceUrl: {
-            //         value: imageServiceUrl
-            //     }
-            // });
             var inputContainer = document.createElement("div");
             inputContainer.classList.add("container");
             // Add latitude controls.
@@ -144,7 +130,7 @@
                 label: "Longitude",
                 name: "x",
                 type: "text",
-                pattern: dms_1.default.dmsRe.source,
+                pattern: dms_conversion_1.default.dmsRe.source,
                 placeholder: "longitude",
                 title: "Longitude in dec. degrees or DMS format.",
                 required: "required",
@@ -158,7 +144,7 @@
                 label: "Latitude",
                 name: "y",
                 type: "text",
-                pattern: dms_1.default.dmsRe.source,
+                pattern: dms_conversion_1.default.dmsRe.source,
                 placeholder: "latitude",
                 title: "Latitude in dec. degrees or DMS format.",
                 required: "required",
@@ -228,11 +214,11 @@
             form.y.addEventListener("blur", coordinateBlur);
             // Disable default form submission behavior (which is to navigate away from current page)
             form.onsubmit = function () {
-                var x = dms_1.parseDms(form.x.value);
-                var y = dms_1.parseDms(form.y.value);
+                var x = dms_conversion_1.parseDms(form.x.value);
+                var y = dms_conversion_1.parseDms(form.y.value);
                 var dms;
                 try {
-                    dms = new dms_1.default(y, x);
+                    dms = new dms_conversion_1.default(y, x);
                 }
                 catch (e) {
                     dms = null;
