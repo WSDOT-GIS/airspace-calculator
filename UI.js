@@ -247,6 +247,20 @@
                 form.dispatchEvent(evt);
             });
         }
+        Object.defineProperty(UI.prototype, "airspaceCalculator", {
+            get: function () {
+                return this._airspaceCalc;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(UI.prototype, "form", {
+            get: function () {
+                return this._form;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return UI;
     }());
     Object.defineProperty(exports, "__esModule", { value: true });

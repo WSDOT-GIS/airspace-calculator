@@ -23,5 +23,7 @@ export interface AirspaceCalculatorForm extends HTMLFormElement {
 export default class UI {
     _airspaceCalc: AirspaceCalculator;
     _form: AirspaceCalculatorForm;
+    readonly airspaceCalculator: AirspaceCalculator;
+    readonly form: AirspaceCalculatorForm;
     constructor(imageServiceUrl: string);
 }

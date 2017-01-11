@@ -7,7 +7,7 @@ require([
 	var map, imageServiceUrl;
 
 	// Define the image service URL with airport surfaces.
-	imageServiceUrl = "http://data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer";
+	imageServiceUrl = "//data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer";
 
 	// Create the map.
 	map = new Map("map", {

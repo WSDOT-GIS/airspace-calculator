@@ -175,6 +175,15 @@ function createLabelAndInput(options: {
 export default class UI {
     _airspaceCalc: AirspaceCalculator;
     _form: AirspaceCalculatorForm;
+
+    public get airspaceCalculator() {
+        return this._airspaceCalc;
+    }
+
+    public get form() {
+        return this._form;
+    }
+
     constructor(imageServiceUrl: string) {
         this._airspaceCalc = new AirspaceCalculator(imageServiceUrl);
         const self = this;
