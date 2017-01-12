@@ -77,7 +77,6 @@
      * @param y - Y
      * @param agl - Height above ground level (AGL) in feet.
      * @param imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
-     * @returns {Promise<AirspaceCalculatorResult>}
      */
     var calculateSurfacePenetration = function (x, y, agl, imageServiceUrl) {
         var elevationPromise = usgs_ned_1.default(x, y);

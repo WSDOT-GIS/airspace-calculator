@@ -44,7 +44,7 @@ function objectToQueryString(o: any) {
 }
 
 /**
- * Executes an identify operation on an image service.
+ * Executes an identify operation on an image service and returns the numeric value.
  */
 function identify(x: number, y: number, imageServerUrl: string): Promise<number | string> {
     let params = {
@@ -64,8 +64,10 @@ function identify(x: number, y: number, imageServerUrl: string): Promise<number 
 
     return fetch(imageServerUrl).then(function (response) {
         return response.json();
+        // For JSON structure, see response section here:
+        // http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify/02r30000010s000000/
     }).then(function (json: any) {
-        let pixelValue = json.value as number | string;
+        let pixelValue = json.value as string;
         let n = Number(pixelValue);
         // Return the number, or pixel value if not a number.
         return isNaN(n) ? pixelValue : n;
@@ -91,7 +93,6 @@ export interface AirspaceCalculatorResult {
  * @param y - Y
  * @param agl - Height above ground level (AGL) in feet.
  * @param imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
- * @returns {Promise<AirspaceCalculatorResult>}
  */
 let calculateSurfacePenetration = function (x: number, y: number, agl: number, imageServiceUrl: string): Promise<AirspaceCalculatorResult> {
 

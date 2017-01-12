@@ -11,11 +11,11 @@ import EsriMap = require("esri/map");
  * @augments AirspaceCalculator/UI
  */
 export default class ArcGisUI extends UI {
+    zoomLevel: number;
     private _draw;
     private _map;
     private markerGraphic;
     private markerLayer;
-    private zoomLevel;
     private resultLayer;
     private mapMarkerSymbol;
     private updateMapMarker(dmsCoordinates);

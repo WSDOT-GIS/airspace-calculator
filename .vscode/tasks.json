@@ -7,17 +7,17 @@
     "showOutput": "always",
     "suppressTaskName": true,
     "tasks": [
-        // {
-        //     "taskName": "install",
-        //     "args": ["install"]
-        // },
-        // {
-        //     "taskName": "update",
-        //     "args": ["update"]
-        // },
+        {
+            "taskName": "build",
+            "isBuildCommand": true,
+            "args": [ "run", "prepublish" ]
+        },
         {
             "taskName": "test",
-            "args": ["run", "test"]
+            "args": [
+                "run",
+                "test"
+            ]
         }
     ]
 }

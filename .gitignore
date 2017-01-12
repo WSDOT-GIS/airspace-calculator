@@ -5,6 +5,9 @@ typings
 **/*Spec.js
 **/*Spec.d.ts
 **/*Spec.js.map
+demo/*.js
+demo/*.d.ts
+demo/*.js.map
 .vscode/iis*.json
 
 # User-specific files

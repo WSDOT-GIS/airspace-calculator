@@ -165,11 +165,11 @@ function formatResults(graphic: Graphic) {
  */
 
 export default class ArcGisUI extends UI {
+    zoomLevel: number = 11;
     private _draw: Draw | null = null;
     private _map: EsriMap | null = null;
     private markerGraphic: Graphic | null;
     private markerLayer: GraphicsLayer;
-    private zoomLevel: number = 11;
     private resultLayer: GraphicsLayer;
     private mapMarkerSymbol = new SimpleMarkerSymbol();
     private updateMapMarker(dmsCoordinates: DmsCoordinates) {

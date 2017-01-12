@@ -159,9 +159,9 @@ var __extends = (this && this.__extends) || function (d, b) {
         __extends(ArcGisUI, _super);
         function ArcGisUI(imageServiceUrl) {
             var _this = _super.call(this, imageServiceUrl) || this;
+            _this.zoomLevel = 11;
             _this._draw = null;
             _this._map = null;
-            _this.zoomLevel = 11;
             _this.mapMarkerSymbol = new SimpleMarkerSymbol();
             return _this;
         }
