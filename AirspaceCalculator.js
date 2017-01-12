@@ -2,14 +2,15 @@
  * Calculates surface penetrations
  * @module AirspaceCalculator
  */
-(function (dependencies, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        var v = factory(require, exports); if (v !== undefined) module.exports = v;
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
     }
-    else if (typeof define === 'function' && define.amd) {
-        define(dependencies, factory);
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "usgs-ned", "./SurfacePenetrationInfo"], factory);
     }
-})(["require", "exports", "usgs-ned", "./SurfacePenetrationInfo"], function (require, exports) {
+})(function (require, exports) {
     "use strict";
     var usgs_ned_1 = require("usgs-ned");
     var SurfacePenetrationInfo_1 = require("./SurfacePenetrationInfo");
@@ -47,7 +48,7 @@
         return output.join("&");
     }
     /**
-     * Executes an identify operation on an image service.
+     * Executes an identify operation on an image service and returns the numeric value.
      */
     function identify(x, y, imageServerUrl) {
         var params = {
@@ -64,6 +65,8 @@
         imageServerUrl = [imageServerUrl, objectToQueryString(params)].join("?");
         return fetch(imageServerUrl).then(function (response) {
             return response.json();
+            // For JSON structure, see response section here:
+            // http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify/02r30000010s000000/
         }).then(function (json) {
             var pixelValue = json.value;
             var n = Number(pixelValue);
@@ -73,13 +76,14 @@
     }
     /**
      * Performs calculation
-     * @param x - X
-     * @param y - Y
+     * @param x - X coordinate of a point
+     * @param y - Y coordinate of a point
      * @param agl - Height above ground level (AGL) in feet.
      * @param imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
+     * @param [elevationServiceUrl] - Override the default URL to the USGS National Map Elevation service, in case they move the service in the future.
      */
-    var calculateSurfacePenetration = function (x, y, agl, imageServiceUrl) {
-        var elevationPromise = usgs_ned_1.default(x, y);
+    var calculateSurfacePenetration = function (x, y, agl, imageServiceUrl, elevationServiceUrl) {
+        var elevationPromise = usgs_ned_1.default(x, y, "Feet", elevationServiceUrl);
         var identifyPromise = identify(x, y, imageServiceUrl);
         return new Promise(function (resolve, reject) {
             Promise.all([elevationPromise, identifyPromise]).then(function (promises) {
@@ -96,14 +100,17 @@
             });
         });
     };
+    /**
+     * Calculates surface penetrations
+     */
     var AirspaceCalculator = (function () {
         /**
-         * Calculates surface penetrations
-         * @constructor
-         * @alias module:AirspaceCalculator
+         * @param imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
+         * @param [elevationServiceUrl] - Override the default URL to the USGS National Map Elevation service, in case they move the service in the future.
          */
-        function AirspaceCalculator(imageServiceUrl) {
+        function AirspaceCalculator(imageServiceUrl, elevationServiceUrl) {
             this.imageServiceUrl = imageServiceUrl;
+            this.elevationServiceUrl = elevationServiceUrl;
             if (!imageServiceUrl) {
                 throw new TypeError("imageServiceUrl not provided");
             }
@@ -116,7 +123,7 @@
          * @returns {Promise<AirspaceCalculatorResult>}
          */
         AirspaceCalculator.prototype.calculate = function (x, y, agl) {
-            return calculateSurfacePenetration(x, y, agl, this.imageServiceUrl);
+            return calculateSurfacePenetration(x, y, agl, this.imageServiceUrl, this.elevationServiceUrl);
         };
         ;
         return AirspaceCalculator;

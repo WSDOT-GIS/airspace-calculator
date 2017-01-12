@@ -14,11 +14,11 @@ export default class ArcGisUI extends UI {
     zoomLevel: number;
     private _draw;
     private _map;
-    private markerGraphic;
-    private markerLayer;
-    private resultLayer;
-    private mapMarkerSymbol;
-    private updateMapMarker(dmsCoordinates);
+    private _markerGraphic;
+    private _markerLayer;
+    private _resultLayer;
+    private _mapMarkerSymbol;
+    private updateMapMarker(dmsCoordinates?);
     map: EsriMap | null;
     constructor(imageServiceUrl: string);
 }

@@ -168,33 +168,32 @@ export default class ArcGisUI extends UI {
     zoomLevel: number = 11;
     private _draw: Draw | null = null;
     private _map: EsriMap | null = null;
-    private markerGraphic: Graphic | null;
-    private markerLayer: GraphicsLayer;
-    private resultLayer: GraphicsLayer;
-    private mapMarkerSymbol = new SimpleMarkerSymbol();
-    private updateMapMarker(dmsCoordinates: DmsCoordinates) {
-        let point;
+    private _markerGraphic: Graphic | null;
+    private _markerLayer: GraphicsLayer;
+    private _resultLayer: GraphicsLayer;
+    private _mapMarkerSymbol = new SimpleMarkerSymbol();
+    private updateMapMarker(dmsCoordinates?: Point | DmsCoordinates) {
         if (dmsCoordinates) {
-            point = dmsCoordinates instanceof Point ? dmsCoordinates : new Point({
+            let point = dmsCoordinates instanceof Point ? dmsCoordinates : new Point({
                 x: dmsCoordinates.longitude.dd,
                 y: dmsCoordinates.latitude.dd,
                 spatialReference: {
                     wkid: 4326
                 }
             });
-            if (!this.markerGraphic) {
-                this.markerGraphic = new Graphic(point, this.mapMarkerSymbol);
-                this.markerLayer.add(this.markerGraphic);
+            if (!this._markerGraphic) {
+                this._markerGraphic = new Graphic(point, this._mapMarkerSymbol);
+                this._markerLayer.add(this._markerGraphic);
             } else {
-                this.markerGraphic.setGeometry(point);
+                this._markerGraphic.setGeometry(point);
             }
-            (this.markerLayer as any).refresh();
+            (this._markerLayer as any).refresh();
         } else {
             // Remove existing marker
-            if (this.markerGraphic) {
-                this.markerLayer.remove(this.markerGraphic);
-                (this.markerLayer as any).refresh();
-                this.markerGraphic = null;
+            if (this._markerGraphic) {
+                this._markerLayer.remove(this._markerGraphic);
+                (this._markerLayer as any).refresh();
+                this._markerGraphic = null;
             }
         }
     }
@@ -203,67 +202,68 @@ export default class ArcGisUI extends UI {
     }
     public set map(value: EsriMap | null) {
         this._map = value;
+        let self = this;
         if (this._map) {
             this._draw = new Draw(this._map);
-            let markerLayer = this._map.graphics;
+            this._markerLayer = this._map.graphics;
 
 
             this._draw.on("draw-complete", function (drawResponse) {
                 drawResponse.target.deactivate();
                 const drawPoint = drawResponse.geographicGeometry as Point;
-                this.form.x.value = drawPoint.x as any;
-                this.form.y.value = drawPoint.y as any;
-                this.updateMapMarker(drawResponse.geographicGeometry);
+                self.form.x.value = drawPoint.x as any;
+                self.form.y.value = drawPoint.y as any;
+                self.updateMapMarker(drawPoint);
 
                 let evt = new CustomEvent("draw-complete", {
                     detail: drawResponse
                 });
-                this.form.dispatchEvent(evt);
+                self.form.dispatchEvent(evt);
             });
 
             this.form.addEventListener("add-from-map", function () {
-                if (this._draw) this._draw.activate(Draw.POINT);
+                (self._draw as Draw).activate(Draw.POINT);
             });
 
             this.form.addEventListener("calculation-complete", function (e: CustomEvent) {
                 let acResult = e.detail;
                 let graphic = acResultToGraphic(acResult);
-                this.resultLayer.add(graphic);
-                this.updateMapMarker();
+                self._resultLayer.add(graphic);
+                self.updateMapMarker();
             });
 
             this.form.addEventListener("clear-graphics", function () {
-                this.resultLayer.clear();
+                self._resultLayer.clear();
             });
 
             this.form.addEventListener("coordinates-update", function (e: CustomEvent) {
                 let dmsCoordinates = e ? e.detail : null;
-                this.updateMapMarker(dmsCoordinates);
+                self.updateMapMarker(dmsCoordinates);
             });
 
             let renderer = createRenderer();
             let infoTemplate = new InfoTemplate(formatTitle, formatResults);
 
-            this.resultLayer = new GraphicsLayer({
+            this._resultLayer = new GraphicsLayer({
                 id: "results",
                 infoTemplate: infoTemplate
             });
-            this.resultLayer.setRenderer(renderer);
+            this._resultLayer.setRenderer(renderer);
 
-            this.resultLayer.on("graphic-add", function (e) {
+            this._resultLayer.on("graphic-add", function (e) {
                 let graphic = e ? e.graphic || null : null;
                 if (graphic) {
                     let geometry = graphic.geometry;
-                    if (this._map) {
-                        let infoWindow = this._map.infoWindow as Popup;
+                    if (self._map) {
+                        let infoWindow = self._map.infoWindow as Popup;
                         infoWindow.setFeatures([graphic]);
                         infoWindow.show(geometry as Point);
-                        this._map.centerAndZoom(geometry as Point, this.zoomLevel);
+                        self._map.centerAndZoom(geometry as Point, self.zoomLevel);
                     }
                 }
             });
 
-            this._map.addLayer(this.resultLayer);
+            this._map.addLayer(self._resultLayer);
         }
     }
 

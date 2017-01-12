@@ -1,15 +1,5 @@
-(function (dependencies, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        var v = factory(require, exports); if (v !== undefined) module.exports = v;
-    }
-    else if (typeof define === 'function' && define.amd) {
-        define(dependencies, factory);
-    }
-})(["require", "exports", "esri/map", "esri/layers/ArcGISImageServiceLayer", "../ArcGisUI"], function (require, exports) {
+require(["esri/map", "esri/layers/ArcGISImageServiceLayer", "AirspaceCalculator/ArcGisUI"], function (Map, ArcGISImageServiceLayer, ArcGisUI) {
     "use strict";
-    var Map = require("esri/map");
-    var ArcGISImageServiceLayer = require("esri/layers/ArcGISImageServiceLayer");
-    var ArcGisUI_1 = require("../ArcGisUI");
     // Define the image service URL with airport surfaces.
     var imageServiceUrl = "//data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer";
     // Create the map.
@@ -20,7 +10,7 @@
         showAttribution: true
     });
     // Create the ArcGIS Airspace Calculator UI.
-    var ui = new ArcGisUI_1.default(imageServiceUrl);
+    var ui = new ArcGisUI.default(imageServiceUrl);
     ui.zoomLevel = 11;
     ui.form.addEventListener("calculation-error", function (e) {
         console.error("calculation error", e);
@@ -45,4 +35,3 @@
         }));
     });
 });
-//# sourceMappingURL=index.js.map

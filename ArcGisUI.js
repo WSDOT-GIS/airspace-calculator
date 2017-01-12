@@ -3,14 +3,15 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-(function (dependencies, factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        var v = factory(require, exports); if (v !== undefined) module.exports = v;
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
     }
-    else if (typeof define === 'function' && define.amd) {
-        define(dependencies, factory);
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "./UI", "esri/Color", "esri/toolbars/draw", "esri/layers/GraphicsLayer", "esri/graphic", "esri/geometry/Point", "esri/renderers/UniqueValueRenderer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol", "esri/InfoTemplate"], factory);
     }
-})(["require", "exports", "./UI", "esri/Color", "esri/toolbars/draw", "esri/layers/GraphicsLayer", "esri/graphic", "esri/geometry/Point", "esri/renderers/UniqueValueRenderer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol", "esri/InfoTemplate"], function (require, exports) {
+})(function (require, exports) {
     "use strict";
     /**
      * Airspace Calculator for use with ArcGIS API for JavaScript.
@@ -162,34 +163,33 @@ var __extends = (this && this.__extends) || function (d, b) {
             _this.zoomLevel = 11;
             _this._draw = null;
             _this._map = null;
-            _this.mapMarkerSymbol = new SimpleMarkerSymbol();
+            _this._mapMarkerSymbol = new SimpleMarkerSymbol();
             return _this;
         }
         ArcGisUI.prototype.updateMapMarker = function (dmsCoordinates) {
-            var point;
             if (dmsCoordinates) {
-                point = dmsCoordinates instanceof Point ? dmsCoordinates : new Point({
+                var point = dmsCoordinates instanceof Point ? dmsCoordinates : new Point({
                     x: dmsCoordinates.longitude.dd,
                     y: dmsCoordinates.latitude.dd,
                     spatialReference: {
                         wkid: 4326
                     }
                 });
-                if (!this.markerGraphic) {
-                    this.markerGraphic = new Graphic(point, this.mapMarkerSymbol);
-                    this.markerLayer.add(this.markerGraphic);
+                if (!this._markerGraphic) {
+                    this._markerGraphic = new Graphic(point, this._mapMarkerSymbol);
+                    this._markerLayer.add(this._markerGraphic);
                 }
                 else {
-                    this.markerGraphic.setGeometry(point);
+                    this._markerGraphic.setGeometry(point);
                 }
-                this.markerLayer.refresh();
+                this._markerLayer.refresh();
             }
             else {
                 // Remove existing marker
-                if (this.markerGraphic) {
-                    this.markerLayer.remove(this.markerGraphic);
-                    this.markerLayer.refresh();
-                    this.markerGraphic = null;
+                if (this._markerGraphic) {
+                    this._markerLayer.remove(this._markerGraphic);
+                    this._markerLayer.refresh();
+                    this._markerGraphic = null;
                 }
             }
         };
@@ -199,57 +199,57 @@ var __extends = (this && this.__extends) || function (d, b) {
             },
             set: function (value) {
                 this._map = value;
+                var self = this;
                 if (this._map) {
                     this._draw = new Draw(this._map);
-                    var markerLayer = this._map.graphics;
+                    this._markerLayer = this._map.graphics;
                     this._draw.on("draw-complete", function (drawResponse) {
                         drawResponse.target.deactivate();
                         var drawPoint = drawResponse.geographicGeometry;
-                        this.form.x.value = drawPoint.x;
-                        this.form.y.value = drawPoint.y;
-                        this.updateMapMarker(drawResponse.geographicGeometry);
+                        self.form.x.value = drawPoint.x;
+                        self.form.y.value = drawPoint.y;
+                        self.updateMapMarker(drawPoint);
                         var evt = new CustomEvent("draw-complete", {
                             detail: drawResponse
                         });
-                        this.form.dispatchEvent(evt);
+                        self.form.dispatchEvent(evt);
                     });
                     this.form.addEventListener("add-from-map", function () {
-                        if (this._draw)
-                            this._draw.activate(Draw.POINT);
+                        self._draw.activate(Draw.POINT);
                     });
                     this.form.addEventListener("calculation-complete", function (e) {
                         var acResult = e.detail;
                         var graphic = acResultToGraphic(acResult);
-                        this.resultLayer.add(graphic);
-                        this.updateMapMarker();
+                        self._resultLayer.add(graphic);
+                        self.updateMapMarker();
                     });
                     this.form.addEventListener("clear-graphics", function () {
-                        this.resultLayer.clear();
+                        self._resultLayer.clear();
                     });
                     this.form.addEventListener("coordinates-update", function (e) {
                         var dmsCoordinates = e ? e.detail : null;
-                        this.updateMapMarker(dmsCoordinates);
+                        self.updateMapMarker(dmsCoordinates);
                     });
                     var renderer = createRenderer();
                     var infoTemplate = new InfoTemplate(formatTitle, formatResults);
-                    this.resultLayer = new GraphicsLayer({
+                    this._resultLayer = new GraphicsLayer({
                         id: "results",
                         infoTemplate: infoTemplate
                     });
-                    this.resultLayer.setRenderer(renderer);
-                    this.resultLayer.on("graphic-add", function (e) {
+                    this._resultLayer.setRenderer(renderer);
+                    this._resultLayer.on("graphic-add", function (e) {
                         var graphic = e ? e.graphic || null : null;
                         if (graphic) {
                             var geometry = graphic.geometry;
-                            if (this._map) {
-                                var infoWindow = this._map.infoWindow;
+                            if (self._map) {
+                                var infoWindow = self._map.infoWindow;
                                 infoWindow.setFeatures([graphic]);
                                 infoWindow.show(geometry);
-                                this._map.centerAndZoom(geometry, this.zoomLevel);
+                                self._map.centerAndZoom(geometry, self.zoomLevel);
                             }
                         }
                     });
-                    this._map.addLayer(this.resultLayer);
+                    this._map.addLayer(self._resultLayer);
                 }
             },
             enumerable: true,

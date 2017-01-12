@@ -75,28 +75,28 @@ function identify(x: number, y: number, imageServerUrl: string): Promise<number 
 }
 
 /**
- * @typedef {Object} AirspaceCalculatorResult
- * @property {SurfacePenetrationInfo} surfacePenetration
- * @property {NedElevationInfo} terrainInfo
- * @property {number[]} xy - An array containing two number elements: X and Y values.
+ * Result of the Airspace Calculator.
  */
-
 export interface AirspaceCalculatorResult {
+    /** Surface penetration information */
     surfacePenetration: SurfacePenetrationInfo;
+    /** Terrain Information */
     terrainInfo: ElevationQueryResponse;
-    xy: [number, number]
+    /** An array containing two number elements: X and Y values. */
+    xy: [number, number];
 }
 
 /**
  * Performs calculation
- * @param x - X
- * @param y - Y
+ * @param x - X coordinate of a point
+ * @param y - Y coordinate of a point
  * @param agl - Height above ground level (AGL) in feet.
  * @param imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
+ * @param [elevationServiceUrl] - Override the default URL to the USGS National Map Elevation service, in case they move the service in the future.
  */
-let calculateSurfacePenetration = function (x: number, y: number, agl: number, imageServiceUrl: string): Promise<AirspaceCalculatorResult> {
+let calculateSurfacePenetration = function (x: number, y: number, agl: number, imageServiceUrl: string, elevationServiceUrl?: string): Promise<AirspaceCalculatorResult> {
 
-    let elevationPromise = getElevation(x, y);
+    let elevationPromise = getElevation(x, y, "Feet", elevationServiceUrl);
     let identifyPromise = identify(x, y, imageServiceUrl);
 
     return new Promise(function (resolve, reject) {
@@ -115,14 +115,15 @@ let calculateSurfacePenetration = function (x: number, y: number, agl: number, i
     });
 };
 
-
+/**
+ * Calculates surface penetrations
+ */
 export default class AirspaceCalculator {
     /**
-     * Calculates surface penetrations
-     * @constructor
-     * @alias module:AirspaceCalculator
+     * @param imageServiceUrl - E.g., http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
+     * @param [elevationServiceUrl] - Override the default URL to the USGS National Map Elevation service, in case they move the service in the future.
      */
-    constructor(public imageServiceUrl: string) {
+    constructor(public imageServiceUrl: string, public elevationServiceUrl?: string) {
         if (!imageServiceUrl) {
             throw new TypeError("imageServiceUrl not provided");
         }
@@ -136,7 +137,7 @@ export default class AirspaceCalculator {
      * @returns {Promise<AirspaceCalculatorResult>}
      */
     calculate(x: number, y: number, agl: number) {
-        return calculateSurfacePenetration(x, y, agl, this.imageServiceUrl);
+        return calculateSurfacePenetration(x, y, agl, this.imageServiceUrl, this.elevationServiceUrl);
     };
 
     /**
