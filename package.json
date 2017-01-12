@@ -1,11 +1,30 @@
 {
   "name": "airspace-calculator",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
   "main": "AirspaceCalculator.js",
   "scripts": {
+    "prepublish": "tsc",
     "test": "jasmine"
   },
+  "files": [
+    "ac-worker.js",
+    "AirspaceCalculator.d.ts",
+    "AirspaceCalculator.d.ts",
+    "AirspaceCalculator.js.map",
+    "AirspaceCalculator.ts",
+    "ArcGisUI.js",
+    "SurfacePenetrationInfo.d.ts",
+    "SurfacePenetrationInfo.d.ts",
+    "SurfacePenetrationInfo.js",
+    "SurfacePenetrationInfo.js.map",
+    "SurfacePenetrationInfo.ts",
+    "UI.d.ts",
+    "UI.d.ts",
+    "UI.js",
+    "UI.js.map",
+    "UI.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WSDOT-GIS/airspace-calculator.git"
@@ -23,10 +42,18 @@
   },
   "homepage": "https://github.com/WSDOT-GIS/airspace-calculator#readme",
   "devDependencies": {
-    "jasmine": "^2.5.2"
+    "@types/arcgis-js-api": "^3.19.0 <4",
+    "@types/dojo": "^1.9.37",
+    "@types/geojson": "0.0.31",
+    "@types/jasmine": "^2.5.40",
+    "@types/whatwg-fetch": "0.0.33",
+    "jasmine": "^2.5.3",
+    "tslint": "^4.3.1",
+    "typescript": "^2.1.5"
   },
   "dependencies": {
+    "dms-conversion": "^3.0.0",
     "node-fetch": "^1.6.3",
-    "usgs-ned": "~3.0.0"
+    "usgs-ned": "~3.0.2"
   }
 }

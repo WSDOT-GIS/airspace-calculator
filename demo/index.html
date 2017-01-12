@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head lang="en-us">
     <title>Airspace Calculator Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <link href="//js.arcgis.com/3.16compact/esri/css/esri.css" rel="stylesheet" />
+    <link href="//js.arcgis.com/3.19compact/esri/css/esri.css" rel="stylesheet" />
     <link href="../AirspaceCalculator.min.css" rel="stylesheet" />
     <link href="../bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="index.css" rel="stylesheet" />
@@ -20,9 +20,7 @@
             <p class="github-link"><a href="https://github.com/WSDOT-GIS/airspace-calculator" target="_blank">Source Code on GitHub</a></p>
         </div>
     </div>
-    <script src="../bower_components/setImmediate/setimmediate.js"></script>
-    <script src="../bower_components/promises/promise.js"></script>
-    <script src="../bower_components/customevent-polyfill/customevent-polyfill.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,CustomEvent,fetch"></script>
     <script>
         (function (root) {
             var dojoConfig = {
@@ -34,13 +32,13 @@
                        main: "AirspaceCalculator"
                    },
                    {
-                       name: "dms",
-                       location: root + "/../bower_components/dms",
+                       name: "dms-conversion",
+                       location: root + "/../node_modules/dms-conversion",
                        main: "dms"
                    },
                    {
-                       name: "usgsNed",
-                       location: root + "/../bower_components/usgs-ned",
+                       name: "usgs-ned",
+                       location: root + "/../node_modules/usgs-ned",
                        main: "usgsNed"
                    }
                 ]
@@ -49,7 +47,7 @@
             window.dojoConfig = dojoConfig;
         }(location.pathname.replace(/\/[^\/]*$/, "")));
     </script>
-    <script src="//js.arcgis.com/3.16compact/init.js"></script>
+    <script src="//js.arcgis.com/3.19compact/init.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
