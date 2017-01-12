@@ -267,7 +267,7 @@ export default class ArcGisUI extends UI {
         }
     }
 
-    constructor(imageServiceUrl: string) {
-        super(imageServiceUrl);
+    constructor(imageServiceUrl: string, elevationServiceUrl?: string) {
+        super(imageServiceUrl, elevationServiceUrl);
     }
 }

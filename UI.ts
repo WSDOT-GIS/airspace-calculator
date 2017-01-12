@@ -184,8 +184,8 @@ export default class UI {
         return this._form;
     }
 
-    constructor(imageServiceUrl: string) {
-        this._airspaceCalc = new AirspaceCalculator(imageServiceUrl);
+    constructor(imageServiceUrl: string, elevationServiceUrl?: string) {
+        this._airspaceCalc = new AirspaceCalculator(imageServiceUrl, elevationServiceUrl);
         const self = this;
 
         let coordinateBlur = function () {
@@ -203,11 +203,6 @@ export default class UI {
                 // Set to null if not valid.
                 dms = null;
             }
-
-            ////if (dms) {
-            ////    form.x.value = dms.longitude;
-            ////    form.y.value = dms.latitude;
-            ////}
 
             let evt = new CustomEvent("coordinates-update", {
                 detail: dms
