@@ -95,8 +95,8 @@
      * @param {string} imageServiceUrl
      */
     var UI = (function () {
-        function UI(imageServiceUrl) {
-            this._airspaceCalc = new AirspaceCalculator_1.default(imageServiceUrl);
+        function UI(imageServiceUrl, elevationServiceUrl) {
+            this._airspaceCalc = new AirspaceCalculator_1.default(imageServiceUrl, elevationServiceUrl);
             var self = this;
             var coordinateBlur = function () {
                 var form = this.form;
@@ -112,10 +112,6 @@
                     // Set to null if not valid.
                     dms = null;
                 }
-                ////if (dms) {
-                ////    form.x.value = dms.longitude;
-                ////    form.y.value = dms.latitude;
-                ////}
                 var evt = new CustomEvent("coordinates-update", {
                     detail: dms
                 });

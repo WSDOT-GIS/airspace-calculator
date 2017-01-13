@@ -20,5 +20,5 @@ export default class ArcGisUI extends UI {
     private _mapMarkerSymbol;
     private updateMapMarker(dmsCoordinates?);
     map: EsriMap | null;
-    constructor(imageServiceUrl: string);
+    constructor(imageServiceUrl: string, elevationServiceUrl?: string);
 }

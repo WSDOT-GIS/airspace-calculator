@@ -25,5 +25,5 @@ export default class UI {
     _form: AirspaceCalculatorForm;
     readonly airspaceCalculator: AirspaceCalculator;
     readonly form: AirspaceCalculatorForm;
-    constructor(imageServiceUrl: string);
+    constructor(imageServiceUrl: string, elevationServiceUrl?: string);
 }

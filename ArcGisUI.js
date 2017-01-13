@@ -158,8 +158,8 @@ var __extends = (this && this.__extends) || function (d, b) {
      */
     var ArcGisUI = (function (_super) {
         __extends(ArcGisUI, _super);
-        function ArcGisUI(imageServiceUrl) {
-            var _this = _super.call(this, imageServiceUrl) || this;
+        function ArcGisUI(imageServiceUrl, elevationServiceUrl) {
+            var _this = _super.call(this, imageServiceUrl, elevationServiceUrl) || this;
             _this.zoomLevel = 11;
             _this._draw = null;
             _this._map = null;
