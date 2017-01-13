@@ -13,6 +13,8 @@
     "AirspaceCalculator.d.ts",
     "AirspaceCalculator.js.map",
     "AirspaceCalculator.ts",
+    "AirspaceCalculator.css",
+    "AirspaceCalculator.min.css",
     "ArcGisUI.js",
     "SurfacePenetrationInfo.d.ts",
     "SurfacePenetrationInfo.d.ts",
