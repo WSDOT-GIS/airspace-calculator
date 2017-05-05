@@ -9,6 +9,7 @@
     }
 })(function (require, exports) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     /**
      * Provides Airspace Calculator UI
      * @module AirspaceCalculator/UI
@@ -260,7 +261,6 @@
         });
         return UI;
     }());
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = UI;
 });
 //# sourceMappingURL=UI.js.map

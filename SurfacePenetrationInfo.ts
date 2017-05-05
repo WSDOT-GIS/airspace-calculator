@@ -64,7 +64,7 @@ export default class SurfacePenetrationInfo {
      * Penetration of surface
      */
     public get penetrationOfSurface(): number | null {
-        return this.surfaceElevation != null ? this.agl - this.distanceFromSurface : null;
+        return this.surfaceElevation != null ? this.agl - (this.distanceFromSurface || 0) : null;
     }
 
     /**

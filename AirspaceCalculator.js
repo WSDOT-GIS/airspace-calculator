@@ -12,6 +12,7 @@
     }
 })(function (require, exports) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     var usgs_ned_1 = require("usgs-ned");
     var SurfacePenetrationInfo_1 = require("./SurfacePenetrationInfo");
     /**
@@ -137,7 +138,6 @@
      * @returns {Promise<AirspaceCalculatorResult>}
      */
     AirspaceCalculator.calculateSurfacePenetration = calculateSurfacePenetration;
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = AirspaceCalculator;
 });
 //# sourceMappingURL=AirspaceCalculator.js.map

@@ -11,6 +11,7 @@
     }
 })(function (require, exports) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
     /**
      * Provides information about surface penetration.
      */
@@ -84,7 +85,7 @@
              * Penetration of surface
              */
             get: function () {
-                return this.surfaceElevation != null ? this.agl - this.distanceFromSurface : null;
+                return this.surfaceElevation != null ? this.agl - (this.distanceFromSurface || 0) : null;
             },
             enumerable: true,
             configurable: true
@@ -101,7 +102,6 @@
         });
         return SurfacePenetrationInfo;
     }());
-    Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = SurfacePenetrationInfo;
 });
 //# sourceMappingURL=SurfacePenetrationInfo.js.map
