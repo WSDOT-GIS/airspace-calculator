@@ -5,10 +5,8 @@
  * @module AirspaceCalculator/UI
  */
 
-import { parseDms, default as DmsCoordinates } from "dms-conversion";
+import { default as DmsCoordinates, parseDms } from "dms-conversion";
 import AirspaceCalculator from "./AirspaceCalculator";
-
-
 
 /**
  * @external CustomEvent
@@ -56,7 +54,7 @@ export interface AirspaceCalculatorForm extends HTMLFormElement {
  * @property {DmsCoordinates} detail
  */
 
-type CreateButtonOptions = {
+interface CreateButtonOptions {
     /** button caption */
     caption: string | HTMLElement;
     /** button title */
@@ -65,7 +63,7 @@ type CreateButtonOptions = {
     iconClass?: string | string[];
     /** The type of button to create (E.g., "button", "submit", or "reset") */
     type?: string;
-};
+}
 
 // Just return a value to define the module export.
 // This example returns an object, but the module
@@ -81,25 +79,23 @@ type CreateButtonOptions = {
  */
 function createButton(options: CreateButtonOptions) {
     options = options || {};
-    let button = document.createElement("button");
+    const button = document.createElement("button");
     button.type = options.type || "button";
     if (options.title) {
         button.title = options.title;
     }
 
-
-    let iconSpan = document.createElement("span");
+    const iconSpan = document.createElement("span");
     iconSpan.classList.add("icon");
     if (typeof options.iconClass === "string") {
         iconSpan.classList.add(options.iconClass);
     } else if (Array.isArray(options.iconClass)) {
-        options.iconClass.forEach(function (s) {
+        options.iconClass.forEach((s) => {
             iconSpan.classList.add(s);
         });
     }
 
-
-    let captionSpan = document.createElement("span");
+    const captionSpan = document.createElement("span");
     captionSpan.classList.add("caption");
     if (typeof options.caption === "string") {
         captionSpan.textContent = options.caption;
@@ -109,7 +105,6 @@ function createButton(options: CreateButtonOptions) {
 
     button.appendChild(iconSpan);
     button.appendChild(captionSpan);
-
 
     return button;
 }
@@ -129,28 +124,28 @@ function createLabelAndInput(options: {
     placeholder?: string,
     title?: string,
     autocomplete?: "on" | "off",
-    min?: number
+    min?: number,
 }) {
     options = options || {};
 
-    let docFrag = document.createDocumentFragment();
-
+    const docFrag = document.createDocumentFragment();
 
     if (options.label) {
-        let label = document.createElement("label");
+        const label = document.createElement("label");
         label.textContent = options.label;
         docFrag.appendChild(label);
     }
 
-    let input = document.createElement("input");
+    const input = document.createElement("input");
 
     input.required = Boolean(options.required);
 
-    let ignoredOptionNames = /^(?:(?:label)|(required))$/i, propVal;
-    for (let name in options) {
-        let option = (options as any)[name];
+    const ignoredOptionNames = /^(?:(?:label)|(required))$/i;
+    // tslint:disable-next-line:forin
+    for (const name in options) {
+        const option = (options as any)[name];
         if (options.hasOwnProperty(name) && !ignoredOptionNames.test(option) && option != null) {
-            propVal = option;
+            const propVal = option;
             if (propVal instanceof RegExp) {
                 input.setAttribute(name, propVal.source);
             } else {
@@ -161,10 +156,8 @@ function createLabelAndInput(options: {
 
     docFrag.appendChild(input);
 
-
     return docFrag;
 }
-
 
 /**
  * UI for the AirspaceCalculator
@@ -173,8 +166,10 @@ function createLabelAndInput(options: {
  * @param {string} imageServiceUrl
  */
 export default class UI {
-    _airspaceCalc: AirspaceCalculator;
-    _form: AirspaceCalculatorForm;
+    // tslint:disable-next-line:variable-name
+    private _airspaceCalc: AirspaceCalculator;
+    // tslint:disable-next-line:variable-name
+    private _form: AirspaceCalculatorForm;
 
     public get airspaceCalculator() {
         return this._airspaceCalc;
@@ -188,12 +183,12 @@ export default class UI {
         this._airspaceCalc = new AirspaceCalculator(imageServiceUrl, elevationServiceUrl);
         const self = this;
 
-        let coordinateBlur = function () {
-            let form = this.form;
+        const coordinateBlur = () => {
+            const theForm = self.form;
 
             // Parse to coordinates.
-            let x = parseDms(form.x.value);
-            let y = parseDms(form.y.value);
+            const x = parseDms(theForm.x.value);
+            const y = parseDms(theForm.y.value);
 
             let dms: DmsCoordinates | null;
             // Create a DmsCoordinates object to ensure values are valid.
@@ -204,19 +199,18 @@ export default class UI {
                 dms = null;
             }
 
-            let evt = new CustomEvent("coordinates-update", {
-                detail: dms
+            const evt = new CustomEvent("coordinates-update", {
+                detail: dms,
             });
 
-            form.dispatchEvent(evt);
+            theForm.dispatchEvent(evt);
         };
 
-
-        let form = document.createElement("form") as AirspaceCalculatorForm;
+        const form = document.createElement("form") as AirspaceCalculatorForm;
         this._form = form;
         form.classList.add("airspace-calculator");
 
-        let inputContainer = document.createElement("div");
+        const inputContainer = document.createElement("div");
         inputContainer.classList.add("container");
 
         // Add latitude controls.
@@ -229,13 +223,12 @@ export default class UI {
             placeholder: "longitude",
             title: "Longitude in dec. degrees or DMS format.",
             required: "required",
-            autocomplete: "on"
+            autocomplete: "on",
         });
         let div = document.createElement("div");
         div.appendChild(frag);
 
         inputContainer.appendChild(div);
-
 
         // Add longitude controls.
 
@@ -247,7 +240,7 @@ export default class UI {
             placeholder: "latitude",
             title: "Latitude in dec. degrees or DMS format.",
             required: "required",
-            autocomplete: "on"
+            autocomplete: "on",
         });
         div = document.createElement("div");
         div.appendChild(frag);
@@ -263,7 +256,7 @@ export default class UI {
             placeholder: "Structure Height",
             title: "Enter a structure height in feet",
             min: 1,
-            required: "required"
+            required: "required",
         });
         div = document.createElement("div");
         div.appendChild(frag);
@@ -272,37 +265,33 @@ export default class UI {
 
         form.appendChild(inputContainer);
 
-
-
-        let mapButtons = document.createElement("div");
+        const mapButtons = document.createElement("div");
         mapButtons.classList.add("map-buttons");
 
         let btn = createButton({
             caption: "Get coords. from map",
             title: "Pick coordinates by clicking a location on the map",
-            iconClass: ["fa", "fa-location-arrow"]
+            iconClass: ["fa", "fa-location-arrow"],
         });
         mapButtons.appendChild(btn);
 
-
-        btn.addEventListener("click", function () {
-            let evt = new CustomEvent("add-from-map", {
-                detail: null
+        btn.addEventListener("click", () => {
+            const evt = new CustomEvent("add-from-map", {
+                detail: null,
             });
             form.dispatchEvent(evt);
         });
 
-
         btn = createButton({
             caption: "Clear Graphics",
             title: "Clears graphics from the map created by this control",
-            iconClass: ["fa", "fa-trash"]
+            iconClass: ["fa", "fa-trash"],
         });
         mapButtons.appendChild(btn);
 
-        btn.addEventListener("click", function () {
-            let evt = new CustomEvent("clear-graphics", {
-                detail: null
+        btn.addEventListener("click", () => {
+            const evt = new CustomEvent("clear-graphics", {
+                detail: null,
             });
             form.dispatchEvent(evt);
         });
@@ -316,7 +305,7 @@ export default class UI {
         btn = createButton({
             type: "submit",
             caption: "Calculate",
-            title: "Begin the calculation"
+            title: "Begin the calculation",
         });
 
         div.appendChild(btn);
@@ -324,23 +313,20 @@ export default class UI {
         btn = createButton({
             type: "reset",
             caption: "Reset",
-            title: "Resets the form"
+            title: "Resets the form",
         });
 
-
         div.appendChild(btn);
-
 
         form.appendChild(div);
 
         form.x.addEventListener("blur", coordinateBlur);
         form.y.addEventListener("blur", coordinateBlur);
 
-
         // Disable default form submission behavior (which is to navigate away from current page)
-        form.onsubmit = function () {
-            let x = parseDms(form.x.value);
-            let y = parseDms(form.y.value);
+        form.onsubmit = () => {
+            const x = parseDms(form.x.value);
+            const y = parseDms(form.y.value);
             let dms: DmsCoordinates | null;
             try {
                 dms = new DmsCoordinates(y, x);
@@ -350,16 +336,16 @@ export default class UI {
             }
 
             if (dms) {
-                let agl = Number(form.height.value);
+                const agl = Number(form.height.value);
 
-                self._airspaceCalc.calculate(x, y, agl).then(function (response) {
-                    let evt = new CustomEvent("calculation-complete", {
-                        detail: response
+                self._airspaceCalc.calculate(x, y, agl).then((response) => {
+                    const evt = new CustomEvent("calculation-complete", {
+                        detail: response,
                     });
                     form.dispatchEvent(evt);
-                }, function (error) {
-                    let evt = new CustomEvent("calculation-error", {
-                        detail: error
+                }, (error) => {
+                    const evt = new CustomEvent("calculation-error", {
+                        detail: error,
                     });
                     form.dispatchEvent(evt);
                 });
@@ -367,9 +353,9 @@ export default class UI {
             return false;
         };
 
-        form.addEventListener("reset", function () {
-            let evt = new CustomEvent("coordinates-update", {
-                detail: null
+        form.addEventListener("reset", () => {
+            const evt = new CustomEvent("coordinates-update", {
+                detail: null,
             });
 
             form.dispatchEvent(evt);
