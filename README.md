@@ -10,8 +10,8 @@ A module that will calculate surface penetration using the [USGS NED Point Query
 
 ## Setup ##
 
-```
-$ bower install
+```console
+$ npm install
 ```
 
 [USGS NED Point Query Service]:http://ned.usgs.gov/epqs/

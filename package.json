@@ -1,15 +1,14 @@
 {
   "name": "airspace-calculator",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
   "main": "AirspaceCalculator.js",
   "scripts": {
-    "prepublish": "tsc",
+    "prepare": "tsc",
     "test": "jasmine"
   },
   "files": [
     "ac-worker.js",
-    "AirspaceCalculator.d.ts",
     "AirspaceCalculator.d.ts",
     "AirspaceCalculator.js.map",
     "AirspaceCalculator.ts",
@@ -17,11 +16,9 @@
     "AirspaceCalculator.min.css",
     "ArcGisUI.js",
     "SurfacePenetrationInfo.d.ts",
-    "SurfacePenetrationInfo.d.ts",
     "SurfacePenetrationInfo.js",
     "SurfacePenetrationInfo.js.map",
     "SurfacePenetrationInfo.ts",
-    "UI.d.ts",
     "UI.d.ts",
     "UI.js",
     "UI.js.map",
@@ -45,11 +42,11 @@
   "homepage": "https://github.com/WSDOT-GIS/airspace-calculator#readme",
   "devDependencies": {
     "@types/arcgis-js-api": "^3.20.0 <4",
-    "@types/geojson": "^1.0.2",
-    "@types/jasmine": "^2.5.40",
-    "jasmine": "^2.6.0",
-    "tslint": "^5.2.0",
-    "typescript": "^2.3.2"
+    "@types/geojson": "^7946.0.0",
+    "@types/jasmine": "^2.8.3",
+    "jasmine": "^2.8.0",
+    "tslint": "^5.9.1",
+    "typescript": "^2.6.2"
   },
   "dependencies": {
     "dms-conversion": "^3.0.0",
