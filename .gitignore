@@ -3,6 +3,7 @@
 *.js
 !ac-worker.js
 !demo/index.js
+!arcgis-rest-api-ext.d.ts
 
 # User-specific files
 *.suo

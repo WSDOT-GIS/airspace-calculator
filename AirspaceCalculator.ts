@@ -6,11 +6,11 @@
 import { Point } from "arcgis-rest-api";
 import getElevation from "usgs-ned";
 import ElevationQueryResponse from "usgs-ned/ElevationQueryResult";
+import { IdentifyResponse } from "./arcgis-rest-api-ext";
 import SurfacePenetrationInfo from "./SurfacePenetrationInfo";
 
 /**
  * Converts WGS 84 coordinate pair into ArcGIS format point object.
- * @returns {ArcGisPoint}
  */
 function createEsriGeometry(x: number, y: number): Point {
     return {
@@ -42,8 +42,13 @@ function objectToQueryString(o: any) {
 
 /**
  * Executes an identify operation on an image service and returns the numeric value.
+ * @param x - X coordinate
+ * @param y - Y coordinate
+ * @param imageServerUrl - Image server URL
+ * @returns Returns the elevation value. If the value returned from the service cannot be converted
+ * to a number, the value itself (a string) will be returned.
  */
-function identify(x: number, y: number, imageServerUrl: string): Promise<number | string> {
+async function identify(x: number, y: number, imageServerUrl: string): Promise<number | string> {
     const params = {
         f: "json",
         geometry: createEsriGeometry(x, y),
@@ -59,16 +64,14 @@ function identify(x: number, y: number, imageServerUrl: string): Promise<number 
     // Add the query string URL.
     imageServerUrl = [imageServerUrl, objectToQueryString(params)].join("?");
 
-    return fetch(imageServerUrl).then((response) => {
-        return response.json();
-        // For JSON structure, see response section here:
-        // http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify/02r30000010s000000/
-    }).then((json: any) => {
-        const pixelValue = json.value as string;
-        const n = Number(pixelValue);
-        // Return the number, or pixel value if not a number.
-        return isNaN(n) ? pixelValue : n;
-    });
+    const queryResponse = await fetch(imageServerUrl);
+    // For JSON structure, see response section here:
+    // http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify/02r30000010s000000/
+    const jsonObj: IdentifyResponse = await queryResponse.json();
+    const pixelValue = jsonObj.value;
+    const n = Number(pixelValue);
+    // Return the number, or pixel value if not a number.
+    return isNaN(n) ? pixelValue : n;
 }
 
 /**
