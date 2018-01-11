@@ -3,20 +3,16 @@
  * @module AirspaceCalculator
  */
 
+import { Point } from "arcgis-rest-api";
 import getElevation from "usgs-ned";
 import ElevationQueryResponse from "usgs-ned/ElevationQueryResult";
 import SurfacePenetrationInfo from "./SurfacePenetrationInfo";
 
 /**
- * @external ArcGisPoint
- * @see {@link http://resources.arcgis.com/en/help/arcgis-rest-api/02r3/02r3000000n1000000.htm#POINT|Point}
- */
-
-/**
  * Converts WGS 84 coordinate pair into ArcGIS format point object.
  * @returns {ArcGisPoint}
  */
-function createEsriGeometry(x: number, y: number) {
+function createEsriGeometry(x: number, y: number): Point {
     return {
         x,
         y,

@@ -49,6 +49,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "@types/arcgis-rest-api": "^10.4.3",
     "dms-conversion": "^3.0.0",
     "usgs-ned": "~3.0.2"
   }
