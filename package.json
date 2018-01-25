@@ -52,7 +52,8 @@
     "karma-jasmine": "^1.1.1",
     "tsify": "^3.0.4",
     "tslint": "^5.9.1",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "watchify": "^3.9.0"
   },
   "dependencies": {
     "@types/arcgis-rest-api": "^10.4.3",
