@@ -4,6 +4,7 @@
 !ac-worker.js
 !demo/index.js
 !arcgis-rest-api-ext.d.ts
+!karma.conf.js
 
 # User-specific files
 *.suo
