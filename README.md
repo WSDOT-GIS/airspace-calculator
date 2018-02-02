@@ -32,6 +32,8 @@ Use
 Below is an example written in TypeScript which shows how to perform a calculation.
 
 ```TypeScript
+import AirspaceCalculator from "airspace-calculator";
+
 const ac = new AirspaceCalculator("http://example.com/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer");
 const x = -122.9033660888309;
 const y = 46.972736571798244;
