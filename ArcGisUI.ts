@@ -171,9 +171,9 @@ export default class ArcGisUI extends UI {
     // tslint:disable:variable-name
     private _draw: Draw | null = null;
     private _map: EsriMap | null = null;
-    private _markerGraphic: Graphic | null;
-    private _markerLayer: GraphicsLayer;
-    private _resultLayer: GraphicsLayer;
+    private _markerGraphic: Graphic | null = null;
+    private _markerLayer: GraphicsLayer | null = null;
+    private _resultLayer: GraphicsLayer | null = null;
     private _mapMarkerSymbol = new SimpleMarkerSymbol();
     // tslint:enable:variable-name
     constructor(imageServiceUrl: string, elevationServiceUrl?: string) {
@@ -190,7 +190,7 @@ export default class ArcGisUI extends UI {
             });
             if (!this._markerGraphic) {
                 this._markerGraphic = new Graphic(point, this._mapMarkerSymbol);
-                this._markerLayer.add(this._markerGraphic);
+                this._markerLayer!.add(this._markerGraphic);
             } else {
                 this._markerGraphic.setGeometry(point);
             }
@@ -198,7 +198,7 @@ export default class ArcGisUI extends UI {
         } else {
             // Remove existing marker
             if (this._markerGraphic) {
-                this._markerLayer.remove(this._markerGraphic);
+                this._markerLayer!.remove(this._markerGraphic);
                 (this._markerLayer as any).refresh();
                 this._markerGraphic = null;
             }
@@ -234,12 +234,12 @@ export default class ArcGisUI extends UI {
             this.form.addEventListener("calculation-complete", ((e: CustomEvent) => {
                 const acResult = e.detail;
                 const graphic = acResultToGraphic(acResult);
-                self._resultLayer.add(graphic);
+                self._resultLayer!.add(graphic);
                 self.updateMapMarker();
             }) as EventListener);
 
             this.form.addEventListener("clear-graphics", () => {
-                self._resultLayer.clear();
+                self._resultLayer!.clear();
             });
 
             this.form.addEventListener("coordinates-update", ((e: CustomEvent) => {
@@ -269,7 +269,7 @@ export default class ArcGisUI extends UI {
                 }
             });
 
-            this._map.addLayer(self._resultLayer);
+            this._map.addLayer(self._resultLayer!);
         }
     }
 }
