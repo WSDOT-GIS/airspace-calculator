@@ -2,7 +2,6 @@ Airspace Calculator
 ===================
 
 [![Build Status](https://travis-ci.org/WSDOT-GIS/airspace-calculator.svg?branch=master)](https://travis-ci.org/WSDOT-GIS/airspace-calculator)
-[![bitHound Score](https://www.bithound.io/github/WSDOT-GIS/airspace-calculator/badges/score.svg)](https://www.bithound.io/github/WSDOT-GIS/airspace-calculator)
 
 A module that will calculate surface penetration using the [USGS NED Point Query Service] and an ArcGIS [Image service].
 
