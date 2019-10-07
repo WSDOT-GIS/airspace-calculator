@@ -6,7 +6,7 @@ describe("Airspace Calculator", () => {
 
     it("should be able to calculate", async (done) => {
         // tslint:disable-next-line:max-line-length
-        const ac = new AirspaceCalculator("http://data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer");
+        const ac = new AirspaceCalculator("https://data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer");
         const x = -122.9033660888309;
         const y = 46.972736571798244;
         const agl = 100;

@@ -66,7 +66,7 @@ async function identify(x: number, y: number, imageServerUrl: string): Promise<n
 
     const queryResponse = await fetch(imageServerUrl);
     // For JSON structure, see response section here:
-    // http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify/02r30000010s000000/
+    // https://developers.arcgis.com/rest/services-reference/identify-image-service-.htm
     const jsonObj: IdentifyResponse = await queryResponse.json();
     const pixelValue = jsonObj.value;
     const n = Number(pixelValue);
@@ -96,7 +96,7 @@ export default class AirspaceCalculator {
      * @param y - Y coordinate of a point
      * @param agl - Height above ground level (AGL) in feet.
      * @param imageServiceUrl - E.g.,
-     * http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
+     * https://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
      * @param [elevationServiceUrl] - Override the default URL to the USGS National Map Elevation service,
      * in case they move the service in the future.
      */
@@ -117,7 +117,7 @@ export default class AirspaceCalculator {
 
     /**
      * @param imageServiceUrl - E.g.,
-     * http://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
+     * https://example.com/arcgis/rest/services/Airport/Airport_Surfaces_40ft_Int/ImageServer
      * @param [elevationServiceUrl] - Override the default URL to the USGS National Map Elevation service,
      * in case they move the service in the future.
      */

@@ -2,7 +2,7 @@ import { Feature, Point, SpatialReference, esriGeometryType } from "arcgis-rest-
 
 /**
  * Response format for the result of an Image Server's Identify operation.
- * See http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Identify/02r30000010s000000/
+ * See https://developers.arcgis.com/rest/services-reference/identify-image-service-.htm
  */
 interface IdentifyResponse {
     objectId: number,

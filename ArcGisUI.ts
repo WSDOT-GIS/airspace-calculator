@@ -126,7 +126,7 @@ function formatResults(graphic: Graphic) {
     if (graphic.attributes.penetratesSurface) {
         p = document.createElement("p");
         a = document.createElement("a");
-        a.href = "http://www.faa.gov/forms/index.cfm/go/document.information/documentID/186273";
+        a.href = "https://www.faa.gov/forms/index.cfm/go/document.information/documentID/186273";
         a.target = "_blank";
         a.textContent = a.title = "Form FAA 7460-1: Notice of Proposed Construction or Alteration";
         p.appendChild(a);

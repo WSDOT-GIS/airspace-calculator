@@ -8,14 +8,14 @@ A module that will calculate surface penetration using the [USGS NED Point Query
 Demo
 ----
 
-[You can see the library in action with this single-page application (SPA) web map.](http://wsdot-gis.github.io/airspace-calculator/demo/) This application is built with the [ArcGIS API for JavaScript] (the older version, [3.X](https://developers.arcgis.com/javascript/3/)).
+[You can see the library in action with this single-page application (SPA) web map.](https://wsdot-gis.github.io/airspace-calculator/demo/) This application is built with the [ArcGIS API for JavaScript] (the older version, [3.X](https://developers.arcgis.com/javascript/3/)).
 
 Setup
 -----
 
 ### Image Service ###
 
-You will need an image service in order to use this library. Instructions for setting up an image service can be found [here](http://enterprise.arcgis.com/en/server/latest/publish-services/windows/key-concepts-for-image-services.htm).
+You will need an image service in order to use this library. Instructions for setting up an image service can be found [here](https://enterprise.arcgis.com/en/server/latest/publish-services/windows/key-concepts-for-image-services.htm).
 
 ### Installing the library via NPM ###
 
@@ -33,7 +33,7 @@ Below is an example written in TypeScript which shows how to perform a calculati
 ```TypeScript
 import AirspaceCalculator from "airspace-calculator";
 
-const ac = new AirspaceCalculator("http://example.com/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer");
+const ac = new AirspaceCalculator("https://example.com/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer");
 const x = -122.9033660888309;
 const y = 46.972736571798244;
 const agl = 100;
