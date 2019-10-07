@@ -44,10 +44,9 @@
     "@types/arcgis-js-api": "^3.26.0",
     "@types/geojson": "^7946.0.4",
     "@types/jasmine": "^2.8.11",
-    "browserify": "^16.2.3",
     "jasmine": "^3.5.0",
-    "tslint": "^5.11.0",
-    "typescript": "^3.1.6"
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
   },
   "dependencies": {
     "@types/arcgis-rest-api": "^10.4.3",
