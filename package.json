@@ -8,21 +8,9 @@
     "test": "jasmine"
   },
   "files": [
-    "ac-worker.js",
-    "AirspaceCalculator.d.ts",
-    "AirspaceCalculator.js.map",
-    "AirspaceCalculator.ts",
-    "AirspaceCalculator.css",
-    "AirspaceCalculator.min.css",
-    "ArcGisUI.js",
-    "SurfacePenetrationInfo.d.ts",
-    "SurfacePenetrationInfo.js",
-    "SurfacePenetrationInfo.js.map",
-    "SurfacePenetrationInfo.ts",
-    "UI.d.ts",
-    "UI.js",
-    "UI.js.map",
-    "UI.ts"
+    "*.js",
+    "*.d.ts",
+    "*.js.map"
   ],
   "repository": {
     "type": "git",
