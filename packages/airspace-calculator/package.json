@@ -29,13 +29,7 @@
   },
   "homepage": "https://github.com/WSDOT-GIS/airspace-calculator#readme",
   "devDependencies": {
-    "@types/arcgis-js-api": "^3.26.0",
-    "@types/geojson": "^7946.0.10",
-    "@types/node": "^18.15.2",
-    "@typescript-eslint/eslint-plugin": "^5.55.0",
-    "@typescript-eslint/parser": "^5.55.0",
-    "eslint": "^8.36.0",
-    "typescript": "^4.9.5"
+    "@types/node": "^18.15.3"
   },
   "dependencies": {
     "@types/arcgis-rest-api": "^10.4.5",
