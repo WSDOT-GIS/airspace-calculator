@@ -113,7 +113,7 @@ function formatTitle(graphic: Graphic) {
  * @returns {HTMLDivElement}
  */
 function formatResults(graphic: Graphic) {
-    // tslint:disable-next-line:max-line-length
+    
     const message = `A structure ${graphic.attributes.agl}' above ground level ${graphic.attributes.penetratesSurface ? " would " : " would not "} penetrate an airport's airspace.`;
 
     const output = document.createElement("div");
@@ -168,14 +168,14 @@ function formatResults(graphic: Graphic) {
 
 export default class ArcGisUI extends UI {
     public zoomLevel: number = 11;
-    // tslint:disable:variable-name
+    
     private _draw: Draw | null = null;
     private _map: EsriMap | null = null;
     private _markerGraphic: Graphic | null = null;
     private _markerLayer: GraphicsLayer | null = null;
     private _resultLayer: GraphicsLayer | null = null;
     private _mapMarkerSymbol = new SimpleMarkerSymbol();
-    // tslint:enable:variable-name
+    
     constructor(imageServiceUrl: string, elevationServiceUrl?: string) {
         super(imageServiceUrl, elevationServiceUrl);
     }

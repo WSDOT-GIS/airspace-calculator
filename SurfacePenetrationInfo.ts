@@ -6,11 +6,9 @@
  * Provides information about surface penetration.
  */
 export default class SurfacePenetrationInfo {
-    // tslint:disable:variable-name
     private _agl: number;
     private _surfaceElevation: number | null;
     private _terrainElevation: number;
-    // tslint:enable:variable-name
 
     /**
      * Creates a new instance of this class

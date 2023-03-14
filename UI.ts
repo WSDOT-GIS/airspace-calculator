@@ -141,7 +141,7 @@ function createLabelAndInput(options: {
     input.required = Boolean(options.required);
 
     const ignoredOptionNames = /^(?:(?:label)|(required))$/i;
-    // tslint:disable-next-line:forin
+    
     for (const name in options) {
         const option = (options as any)[name];
         if (options.hasOwnProperty(name) && !ignoredOptionNames.test(option) && option != null) {
@@ -166,9 +166,9 @@ function createLabelAndInput(options: {
  * @param {string} imageServiceUrl
  */
 export default class UI {
-    // tslint:disable-next-line:variable-name
+    
     private _airspaceCalc: AirspaceCalculator;
-    // tslint:disable-next-line:variable-name
+    
     private _form: AirspaceCalculatorForm;
 
     public get airspaceCalculator() {

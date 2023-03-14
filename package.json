@@ -4,8 +4,10 @@
   "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
   "main": "AirspaceCalculator.js",
   "scripts": {
-    "prepare": "tsc",
-    "test": "jasmine"
+    "prepare": "tsc"
+  },
+  "exports": {
+    "./*": "./*.js"
   },
   "files": [
     "*.js",
@@ -31,8 +33,10 @@
   "devDependencies": {
     "@types/arcgis-js-api": "^3.26.0",
     "@types/geojson": "^7946.0.10",
-    "@types/jasmine": "^4.3.1",
-    "jasmine": "^4.5.0",
+    "@types/node": "^18.15.2",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
     "typescript": "^4.9.5"
   },
   "dependencies": {
