@@ -1,5 +1,3 @@
-/*global define, require, module*/
-
 /**
  * Provides Airspace Calculator UI
  * @module AirspaceCalculator/UI
@@ -144,7 +142,7 @@ function createLabelAndInput(options: {
     
     for (const name in options) {
         const option = (options as any)[name];
-        if (options.hasOwnProperty(name) && !ignoredOptionNames.test(option) && option != null) {
+        if (Object.prototype.hasOwnProperty.call(options, name) && !ignoredOptionNames.test(option) && option != null) {
             const propVal = option;
             if (propVal instanceof RegExp) {
                 input.setAttribute(name, propVal.source);
