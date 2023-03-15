@@ -1,5 +1,6 @@
 # Custom Dictionary Words
 codepaths
+dijit
 tsbuildinfo
 USGS
 wkid

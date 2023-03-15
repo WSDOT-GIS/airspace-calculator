@@ -1,0 +1,33 @@
+{
+  "name": "airspace-calculator-ui-arcgis3",
+  "version": "1.0.0",
+  "description": "Airspace Calculator UI for legacy ArcGIS JavaScript API 3.X",
+  "main": "ArcGisUI.js",
+  "devDependencies": {
+    "@types/arcgis-js-api": "^3.40.0",
+    "airspace-calculator": "^3.0.0"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "WSDOT",
+  "contributors": [
+    "Jeff Jacobson"
+  ],
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WSDOT-GIS/airspace-calculator.git"
+  },
+  "keywords": [
+    "arcgis",
+    "airspace",
+    "calculator",
+    "surface",
+    "penetration"
+  ],
+  "bugs": {
+    "url": "https://github.com/WSDOT-GIS/airspace-calculator/issues"
+  },
+  "homepage": "https://github.com/WSDOT-GIS/airspace-calculator/packages/ArcGis3/README.md"
+}
