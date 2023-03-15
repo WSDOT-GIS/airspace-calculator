@@ -1,28 +1,22 @@
 {
-  "name": "geoportal-basemap-test",
+  "name": "demo-arcgis3",
   "version": "0.0.0",
   "description": "test of basemap issue",
   "main": "index.js",
   "scripts": {
     "prepare": "webpack",
     "watch": "webpack -w",
-    "serve": "dotnet-serve -S -o",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "dotnet-serve -o"
   },
   "private": true,
   "author": "Jeff Jacobson",
   "license": "Unlicense",
   "devDependencies": {
     "@types/arcgis-js-api": "^3.27.0",
-    "prettier": "^1.16.4",
-    "source-map": "^0.7.3",
-    "ts-loader": "^5.3.3",
-    "tslint": "^5.13.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.3.3333",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3"
+    "source-map": "^0.7.4",
+    "ts-loader": "^9.4.2",
+    "webpack": "^5.76.2",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {},
   "repository": {

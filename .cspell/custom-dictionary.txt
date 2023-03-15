@@ -1,4 +1,5 @@
 # Custom Dictionary Words
+basemap
 codepaths
 dijit
 tsbuildinfo
