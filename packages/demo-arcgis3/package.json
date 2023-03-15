@@ -1,0 +1,39 @@
+{
+  "name": "geoportal-basemap-test",
+  "version": "0.0.0",
+  "description": "test of basemap issue",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "webpack",
+    "watch": "webpack -w",
+    "serve": "dotnet-serve -S -o",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true,
+  "author": "Jeff Jacobson",
+  "license": "Unlicense",
+  "devDependencies": {
+    "@types/arcgis-js-api": "^3.27.0",
+    "prettier": "^1.16.4",
+    "source-map": "^0.7.3",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "typescript": "^3.3.3333",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WSDOT-GIS/geoportal-basemap-test.git"
+  },
+  "keywords": [
+    "temp"
+  ],
+  "bugs": {
+    "url": "https://github.com/WSDOT-GIS/geoportal-basemap-test/issues"
+  },
+  "homepage": "https://github.com/WSDOT-GIS/geoportal-basemap-test#readme"
+}
