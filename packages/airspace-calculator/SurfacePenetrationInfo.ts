@@ -1,42 +1,31 @@
 /**
- * SurfacePenetrationInfo module
- */
-
-/**
  * Provides information about surface penetration.
  */
-export default class SurfacePenetrationInfo {
-    private _agl: number;
-    private _surfaceElevation: number | null;
-    private _terrainElevation: number;
+export class SurfacePenetrationInfo {
+    private readonly _surfaceElevation: number | null;
 
     /**
      * Creates a new instance of this class
      * @param agl - Height about ground level in feet
-     * @param surfaceElevation - Surface elevation
-     * @param terrainElevation - Terrain elevation
+     * @param surfaceElevation - Elevation of the surface
+     * @param terrainElevation - Elevation of the terrain
      */
-    constructor(agl: number, surfaceElevation: number | string | null, terrainElevation: number) {
+    constructor(public readonly agl: number, surfaceElevation: number | string | null, public readonly terrainElevation: number) {
         if (typeof surfaceElevation === "string") {
             if (surfaceElevation === "NoData") {
-                throw new Error("Surface elevation has no data.");
+                throw new TypeError("Surface elevation has no data.");
             } else {
-                this._surfaceElevation = parseFloat(surfaceElevation);
+                surfaceElevation = parseFloat(surfaceElevation);
+                if (isNaN(surfaceElevation)) {
+                    throw new TypeError(`Input string is not a number: ${surfaceElevation}`);
+                }
+                this._surfaceElevation = surfaceElevation;
             }
         } else if (typeof surfaceElevation === "number") {
             this._surfaceElevation = surfaceElevation;
         } else {
             this._surfaceElevation = null;
         }
-        this._agl = agl;
-        this._terrainElevation = terrainElevation;
-    }
-
-    /**
-     * Height about ground level in feet.
-     */
-    public get agl() {
-        return this._agl;
     }
 
     /**
@@ -44,13 +33,6 @@ export default class SurfacePenetrationInfo {
      */
     public get surfaceElevation() {
         return this._surfaceElevation;
-    }
-
-    /**
-     * Elevation of the terrain.
-     */
-    public get terrainElevation() {
-        return this._terrainElevation;
     }
 
     /**
@@ -75,3 +57,5 @@ export default class SurfacePenetrationInfo {
     }
 
 }
+
+export default SurfacePenetrationInfo;
