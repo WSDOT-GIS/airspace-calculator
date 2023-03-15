@@ -2,7 +2,8 @@
     "workspaces": [
         "packages/airspace-calculator",
         "packages/UI",
-        "packages/ArcGis3"
+        "packages/ArcGis3",
+        "packages/demo"
     ],
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.55.0",
