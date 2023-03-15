@@ -2,25 +2,30 @@
  * Airspace Calculator for use with ArcGIS API for JavaScript.
  * @module ArcGisUI
  */
-import Color = require("esri/Color");
-import Point = require("esri/geometry/Point");
-import Graphic = require("esri/graphic");
-import InfoTemplate = require("esri/InfoTemplate");
-import GraphicsLayer = require("esri/layers/GraphicsLayer");
-import UniqueValueRenderer = require("esri/renderers/UniqueValueRenderer");
-import SimpleLineSymbol = require("esri/symbols/SimpleLineSymbol");
-import SimpleMarkerSymbol = require("esri/symbols/SimpleMarkerSymbol");
-import Draw = require("esri/toolbars/draw");
-import UI from "airspace-calculator-ui";
-
-import DmsCoordinates from "dms-conversion";
-import Popup = require("esri/dijit/Popup");
-import EsriMap = require("esri/map");
-import type { AirspaceCalculatorResult } from "airspace-calculator";
+import Color from "esri/Color";
+import type Popup from "esri/dijit/Popup";
+import Point from "esri/geometry/Point";
+import Graphic from "esri/graphic";
+import InfoTemplate from "esri/InfoTemplate";
 import type FeatureLayer from "esri/layers/FeatureLayer";
+import GraphicsLayer from "esri/layers/GraphicsLayer";
+import type EsriMap from "esri/map";
+import UniqueValueRenderer from "esri/renderers/UniqueValueRenderer";
+import SimpleLineSymbol from "esri/symbols/SimpleLineSymbol";
+import SimpleMarkerSymbol from "esri/symbols/SimpleMarkerSymbol";
+import Draw from "esri/toolbars/draw";
+
+import type { AirspaceCalculatorResult } from "airspace-calculator";
+import UI from "airspace-calculator-ui";
+import type DmsCoordinates from "dms-conversion";
 
 type HasRefresh = Pick<FeatureLayer, "refresh">;
 
+/**
+ * Check to see if a {@link GraphicsLayer} has a 
+ * @param layer 
+ * @returns 
+ */
 function checkIfLayerHasRefresh(
   layer: (GraphicsLayer & Partial<HasRefresh>) | null
 ): layer is GraphicsLayer & HasRefresh {
