@@ -1,0 +1,66 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "typescript",
+			"tsconfig": "packages/airspace-calculator/tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": "build",
+			"label": "tsc: watch - packages/airspace-calculator/tsconfig.json"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "packages/UI/tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": "build",
+			"label": "tsc: watch - packages/UI/tsconfig.json"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "packages/ArcGis3/tsconfig.json",
+			"option": "watch",
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": "build",
+			"label": "tsc: watch - packages/ArcGis3/tsconfig.json"
+		},
+		{
+			"type": "npm",
+			"script": "watch",
+			"path": "packages/demo-arcgis3",
+			"group": "build",
+			"problemMatcher": [
+				"$ts-webpack-watch"
+			],
+			"label": "npm: watch - packages/demo-arcgis3",
+			"detail": "webpack -w"
+		},
+		{
+			"label": "Watch All",
+			"detail": "Starts all of the 'watch' tasks",
+			"type": "process",
+			"icon": {
+				"id": "eye-watch",
+				"color": "terminal.ansiRed"
+			},
+			"group": "build",
+			"dependsOn": [
+				"tsc: watch - packages/airspace-calculator/tsconfig.json",
+				"tsc: watch - packages/UI/tsconfig.json",
+				"tsc: watch - packages/ArcGis3/tsconfig.json",
+				"npm: watch - packages/demo-arcgis3"
+			],
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"isBackground": true
+		}
+	]
+}
