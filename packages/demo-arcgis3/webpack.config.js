@@ -1,14 +1,16 @@
-const webpack = require("webpack");
-const path = require("path");
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const config = {
   mode: "production",
   entry: "./src/main.ts",
   devtool: "source-map",
   output: {
-    path: path.resolve(__dirname, "app"),
+    path: resolve(__dirname, "app"),
     filename: "main.js",
-    libraryTarget: "amd"
+    libraryTarget: "umd"
   },
   module: {
     rules: [
@@ -25,4 +27,4 @@ const config = {
   externals: /^esri/
 };
 
-module.exports = config;
+export default config;

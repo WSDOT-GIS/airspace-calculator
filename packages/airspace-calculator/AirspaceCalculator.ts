@@ -13,6 +13,8 @@ import {
 import { IdentifyResponse } from "./arcgis-rest-api-ext";
 import SurfacePenetrationInfo from "./SurfacePenetrationInfo";
 
+export { SurfacePenetrationInfo };
+
 /**
  * Converts WGS 84 coordinate pair into ArcGIS format point object.
  */
@@ -20,7 +22,7 @@ function createEsriGeometry(x: number, y: number): Point {
   return {
     x,
     y,
-    
+
     spatialReference: {
       wkid: 4326,
     },

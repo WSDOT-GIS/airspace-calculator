@@ -10,7 +10,6 @@
     "@types/arcgis-js-api": "^3.40.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jeff Jacobson",
   "license": "Unlicense"

@@ -2,15 +2,18 @@
   "name": "demo-arcgis3",
   "version": "0.0.0",
   "description": "test of basemap issue",
-  "main": "index.js",
   "scripts": {
-    "prepare": "webpack",
+    "prepare": "npm run build",
+    "build": "webpack",
     "watch": "webpack -w",
     "serve": "dotnet-serve -o"
   },
   "private": true,
   "author": "Jeff Jacobson",
   "license": "Unlicense",
+  "dependencies": {
+    "airspace-calculator-ui-arcgis3": "^1.0.0"
+  },
   "devDependencies": {
     "@types/arcgis-js-api": "^3.27.0",
     "source-map": "^0.7.4",
@@ -18,7 +21,6 @@
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/WSDOT-GIS/geoportal-basemap-test.git"

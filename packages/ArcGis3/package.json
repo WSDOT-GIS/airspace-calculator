@@ -3,12 +3,18 @@
   "version": "1.0.0",
   "description": "Airspace Calculator UI for legacy ArcGIS JavaScript API 3.X",
   "main": "ArcGisUI.js",
+  "type": "module",
+  "files": [
+    "*.d.ts",
+    "*.js"
+  ],
   "devDependencies": {
-    "@types/arcgis-js-api": "^3.40.0",
-    "airspace-calculator": "^3.0.0"
+    "@types/arcgis-js-api": "^3.40.0"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prepare": "npm run build"
   },
   "author": "WSDOT",
   "contributors": [
@@ -29,5 +35,9 @@
   "bugs": {
     "url": "https://github.com/WSDOT-GIS/airspace-calculator/issues"
   },
-  "homepage": "https://github.com/WSDOT-GIS/airspace-calculator/packages/ArcGis3/README.md"
+  "homepage": "https://github.com/WSDOT-GIS/airspace-calculator/packages/ArcGis3/README.md",
+  "dependencies": {
+    "airspace-calculator": "^3.0.0",
+    "airspace-calculator-ui": "^1.0.0"
+  }
 }
