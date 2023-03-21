@@ -4,8 +4,7 @@ import type Widget from "@arcgis/core/widgets/Widget";
 export async function setupWidgets(view: MapView) {
   const { default: Expand } = await import("@arcgis/core/widgets/Expand");
 
-  // bottom-leading
-
+  // set up the bottom-left widgets.
   import("@arcgis/core/widgets/Legend").then(({ default: Legend }) => {
     const legend = new Legend({ view });
     const expand = new Expand({
@@ -14,6 +13,10 @@ export async function setupWidgets(view: MapView) {
     view.ui.add(expand, "bottom-leading");
   });
 
+  /**
+   * Dynamically imports the "Search" widget module and creates a Search widget.
+   * @returns A Search widget.
+   */
   async function setupSearch() {
     const { default: Search } = await import("@arcgis/core/widgets/Search");
     const search = new Search({
@@ -43,10 +46,15 @@ export async function setupWidgets(view: MapView) {
 
   // top-trailing
 
+  /**
+   * Creates the widgets in the upper-right of the map.
+   */
   async function setupTopTrailing() {
     const searchPromise = setupSearch();
 
     const group = "top-trailing";
+
+    // Import modules and then create the corresponding widgets.
 
     const basemapGalleryPromise = import(
       "@arcgis/core/widgets/BasemapGallery"
@@ -98,6 +106,7 @@ export async function setupWidgets(view: MapView) {
       }
     );
 
+    // Put all of the widget creation promises into an array
     const widgetPromises = [
       searchPromise,
       basemapGalleryPromise,
@@ -105,10 +114,14 @@ export async function setupWidgets(view: MapView) {
       homePromise,
     ];
 
+    // Wait for the widget creations to be settled.
     const promiseSettledResults = await Promise.allSettled(widgetPromises);
 
+    // Create arrays for the widgets (successful promises) and failed promises.
     const widgets = new Array<Widget>();
     const failures = new Array<PromiseSettledResult<Widget>>();
+
+    // Populate the arrays.
     for (const item of promiseSettledResults) {
       if (item.status === "rejected") {
         console.error(`promise failed`, item.reason);
@@ -118,6 +131,7 @@ export async function setupWidgets(view: MapView) {
       }
     }
 
+    // Add the widgets that were successfully created to the view UI.
     view.ui.add(widgets, group);
   }
 
