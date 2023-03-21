@@ -1,4 +1,5 @@
 import type MapView from "@arcgis/core/views/MapView";
+import type Widget from "@arcgis/core/widgets/Widget";
 
 export async function setupWidgets(view: MapView) {
   const { default: Expand } = await import("@arcgis/core/widgets/Expand");
@@ -7,7 +8,10 @@ export async function setupWidgets(view: MapView) {
 
   import("@arcgis/core/widgets/Legend").then(({ default: Legend }) => {
     const legend = new Legend({ view });
-    view.ui.add(legend, "bottom-leading");
+    const expand = new Expand({
+      content: legend
+    });
+    view.ui.add(expand, "bottom-leading");
   });
 
   async function setupSearch() {
@@ -42,6 +46,8 @@ export async function setupWidgets(view: MapView) {
   async function setupTopTrailing() {
     const searchPromise = setupSearch();
 
+    const group = "top-trailing";
+
     const basemapGalleryPromise = import(
       "@arcgis/core/widgets/BasemapGallery"
     ).then(({ default: BasemapGallery }) => {
@@ -53,6 +59,7 @@ export async function setupWidgets(view: MapView) {
       const basemapExpand = new Expand({
         content: basemapGallery,
         view,
+        group,
       });
       return basemapExpand;
     });
@@ -70,6 +77,7 @@ export async function setupWidgets(view: MapView) {
         });
         const layerListExpand = new Expand({
           content: layerList,
+          group,
         });
         return layerListExpand;
       }
@@ -91,20 +99,20 @@ export async function setupWidgets(view: MapView) {
       homePromise,
     ];
 
-    const results = (await Promise.allSettled(widgetPromises))
-      .filter((item, index) => {
-        if (item.status === "rejected") {
-          console.error(`item ${index} failed`, item.reason);
-          return false;
-        }
-        return true;
-      })
-      .map((item) => (item.status === "fulfilled" ? item.value : null));
+    const promiseSettledResults = await Promise.allSettled(widgetPromises);
 
-    view.ui.add(
-      results.filter((item) => item !== null),
-      "top-trailing"
-    );
+    const widgets = new Array<Widget>();
+    const failures = new Array<PromiseSettledResult<Widget>>();
+    for (const item of promiseSettledResults) {
+      if (item.status === "rejected") {
+        console.error(`promise failed`, item.reason);
+        failures.push(item);
+      } else {
+        widgets.push(item.value);
+      }
+    }
+
+    view.ui.add(widgets, group);
   }
 
   setupTopTrailing();
