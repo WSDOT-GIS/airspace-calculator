@@ -1,5 +1,4 @@
 import "./style.css";
-import { setupWidgets } from "./widgets";
 
 Promise.all([
   import("@arcgis/core/Map"),
@@ -29,7 +28,8 @@ Promise.all([
 
     setupLoadingIndicator(view);
 
-    view.when(function () {
+    view.when(async () => {
+      const { setupWidgets } = await import("./widgets");
       setupWidgets(view);
     });
   }

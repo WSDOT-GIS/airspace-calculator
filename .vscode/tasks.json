@@ -43,6 +43,17 @@
 			"detail": "webpack -w"
 		},
 		{
+			"type": "npm",
+			"script": "dev",
+			"path": "packages/demo-arcgis4",
+			"group": "build",
+			"problemMatcher": [
+				
+			],
+			"label": "watch demo-arcgis4",
+			"detail": "Runs `vite dev` for ArcGIS 4 demo"
+		},
+		{
 			"label": "Watch All",
 			"detail": "Starts all of the 'watch' tasks",
 			"type": "process",
@@ -54,8 +65,7 @@
 			"dependsOn": [
 				"tsc: watch - packages/airspace-calculator/tsconfig.json",
 				"tsc: watch - packages/UI/tsconfig.json",
-				"tsc: watch - packages/ArcGis3/tsconfig.json",
-				"npm: watch - packages/demo-arcgis3"
+				"watch demo-arcgis4"
 			],
 			"problemMatcher": [
 				"$tsc-watch"

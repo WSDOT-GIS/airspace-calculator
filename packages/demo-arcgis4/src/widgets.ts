@@ -1,10 +1,12 @@
 import type MapView from "@arcgis/core/views/MapView";
+import Expand from "@arcgis/core/widgets/Expand";
 import type Widget from "@arcgis/core/widgets/Widget";
+import type ListItem from "@arcgis/core/widgets/LayerList/ListItem";
+import type { AirspaceCalculatorForm } from "airspace-calculator-ui";
+import "airspace-calculator-ui/AirspaceCalculator.css";
+import { setupAirspaceCalculator } from "./ac-controls";
 
-export async function setupWidgets(view: MapView) {
-  const { default: Expand } = await import("@arcgis/core/widgets/Expand");
-
-  // set up the bottom-left widgets.
+function setupLegend(view: MapView) {
   import("@arcgis/core/widgets/Legend").then(({ default: Legend }) => {
     const legend = new Legend({ view });
     const expand = new Expand({
@@ -12,6 +14,11 @@ export async function setupWidgets(view: MapView) {
     });
     view.ui.add(expand, "bottom-leading");
   });
+}
+
+export async function setupWidgets(view: MapView) {
+  // set up the bottom-left widgets.
+  setupLegend(view);
 
   /**
    * Dynamically imports the "Search" widget module and creates a Search widget.
@@ -83,10 +90,11 @@ export async function setupWidgets(view: MapView) {
             statusIndicators: true,
           },
           listItemCreatedFunction: function (event) {
-            const { item } = event;
+            const item: ListItem = event.item;
             item.panel = {
-              content: "legend"
-            }
+              content: ["legend"],
+            } as typeof ListItem.prototype.panel;
+            // TODO: Add link to metadata.
           },
         });
         const layerListExpand = new Expand({
@@ -106,20 +114,25 @@ export async function setupWidgets(view: MapView) {
       }
     );
 
-    // Put all of the widget creation promises into an array
+    // Put all of the widget creation promises into an array.
+    // The order of this array determines the order of the widgets
+    // on the map.
     const widgetPromises = [
       searchPromise,
+      homePromise,
       basemapGalleryPromise,
       layerListPromise,
-      homePromise,
+      setupAirspaceCalculator(view),
     ];
 
     // Wait for the widget creations to be settled.
     const promiseSettledResults = await Promise.allSettled(widgetPromises);
 
     // Create arrays for the widgets (successful promises) and failed promises.
-    const widgets = new Array<Widget>();
-    const failures = new Array<PromiseSettledResult<Widget>>();
+    const widgets = new Array<Widget | AirspaceCalculatorForm>();
+    const failures = new Array<
+      PromiseSettledResult<Widget | AirspaceCalculatorForm>
+    >();
 
     // Populate the arrays.
     for (const item of promiseSettledResults) {
