@@ -9,7 +9,7 @@ export async function setupWidgets(view: MapView) {
   import("@arcgis/core/widgets/Legend").then(({ default: Legend }) => {
     const legend = new Legend({ view });
     const expand = new Expand({
-      content: legend
+      content: legend,
     });
     view.ui.add(expand, "bottom-leading");
   });
@@ -73,6 +73,12 @@ export async function setupWidgets(view: MapView) {
           visibleElements: {
             errors: true,
             statusIndicators: true,
+          },
+          listItemCreatedFunction: function (event) {
+            const { item } = event;
+            item.panel = {
+              content: "legend"
+            }
           },
         });
         const layerListExpand = new Expand({
