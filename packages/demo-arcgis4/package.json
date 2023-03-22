@@ -11,6 +11,6 @@
   "devDependencies": {
     "@arcgis/core": "^4.26.5",
     "airspace-calculator-ui": "^1.0.0",
-    "vite": "^4.2.0"
+    "vite": "^4.2.1"
   }
 }
