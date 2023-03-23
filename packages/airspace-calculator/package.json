@@ -2,17 +2,17 @@
   "name": "airspace-calculator",
   "version": "3.0.0",
   "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
-  "main": "./AirspaceCalculator.js",
+  "main": "./module/AirspaceCalculator.js",
   "type": "module",
-  "types": "./AirspaceCalculator.d.ts",
+  "types": "./module/AirspaceCalculator.d.ts",
   "scripts": {
     "prepare": "npm run build",
     "build": "tsc"
   },
   "files": [
-    "*.js",
-    "*.d.ts",
-    "*.js.map"
+    "./module/*.js",
+    "./module/*.d.ts",
+    "./module/*.js.map"
   ],
   "repository": {
     "type": "git",

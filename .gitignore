@@ -197,7 +197,5 @@ $RECYCLE.BIN/
 *.mjs
 *.d.mts
 !ac-worker.js
-!demo/index.js
-!arcgis-rest-api-ext.d.ts
 !karma.conf.js
 *.zip
