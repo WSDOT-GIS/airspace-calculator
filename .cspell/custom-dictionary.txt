@@ -3,6 +3,8 @@ basemap
 basemaps
 codepaths
 dijit
+subfolder
+subfolders
 tsbuildinfo
 USGS
 wkid
