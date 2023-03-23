@@ -10,7 +10,7 @@ import {
   WKId,
   type ElevationData,
 } from "usgs-ned";
-import { IdentifyResponse } from "./arcgis-rest-api-ext";
+import type { IdentifyResponse } from "./arcgis-rest-api-ext";
 import SurfacePenetrationInfo from "./SurfacePenetrationInfo";
 
 export { SurfacePenetrationInfo };
