@@ -198,10 +198,10 @@ export default class UI {
     public imageServiceUrl: string,
     public elevationServiceUrl?: string
   ) {
-    function coordinateBlur(this: AirspaceCalculatorForm) {
+    const coordinateBlur = () => {
       // Parse to coordinates.
-      const x = parseDms(this.x.value);
-      const y = parseDms(this.y.value);
+      const x = parseDms(this._form.x.value);
+      const y = parseDms(this._form.y.value);
 
       let dms: DmsCoordinates | null;
       // Create a DmsCoordinates object to ensure values are valid.
@@ -216,7 +216,7 @@ export default class UI {
         detail: dms,
       });
 
-      this.dispatchEvent(evt);
+      this._form.dispatchEvent(evt);
     }
 
     const form = document.createElement("form") as AirspaceCalculatorForm;

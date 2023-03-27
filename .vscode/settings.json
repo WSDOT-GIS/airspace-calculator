@@ -1,2 +1,5 @@
 {
+    "conventionalCommits.scopes": [
+        "UI"
+    ]
 }
