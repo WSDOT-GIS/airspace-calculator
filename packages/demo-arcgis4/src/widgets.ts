@@ -3,7 +3,6 @@ import Expand from "@arcgis/core/widgets/Expand";
 import type Widget from "@arcgis/core/widgets/Widget";
 import type ListItem from "@arcgis/core/widgets/LayerList/ListItem";
 import type { AirspaceCalculatorForm } from "airspace-calculator-ui";
-// import "airspace-calculator-ui/AirspaceCalculator.css";
 import { setupAirspaceCalculator } from "./ac-controls";
 
 function setupLegend(view: MapView) {
@@ -16,9 +15,22 @@ function setupLegend(view: MapView) {
   });
 }
 
+function createTitleWidget() {
+  const div = document.createElement("h1");
+  div.textContent = "🚧 Work-in-progress 🚧: WSDOT Airspace Calculator"
+  div.classList.add("esri-widget","esri-header")
+
+  return div
+}
+
 export async function setupWidgets(view: MapView) {
   // set up the bottom-left widgets.
   setupLegend(view);
+
+  view.ui.add(createTitleWidget(), {
+    index: 0,
+    position: "top-leading"
+  });
 
   /**
    * Dynamically imports the "Search" widget module and creates a Search widget.

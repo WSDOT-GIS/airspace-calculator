@@ -11,6 +11,10 @@ import { calculateSurfacePenetration } from "airspace-calculator";
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent|CustomEvent}
  */
 
+export const coordinatesUpdateEventName = "coordinates-update";
+export const calculationCompleteEventName = "calculation-complete";
+export const calculationErrorEventName = "calculation-error";
+
 /**
  * An HTML form containing Airspace Calculator controls.
  */
@@ -126,19 +130,68 @@ function createButton(options: CreateButtonOptions) {
   return button;
 }
 
+function isIdInUse(id: string, ...parentsToSearch: Element[]): boolean {
+  let element = document.getElementById(id);
+
+  if (element) {
+    return true;
+  }
+
+  if (!parentsToSearch || !parentsToSearch.length) {
+    return false;
+  }
+
+  for (const parent of parentsToSearch) {
+    element = parent.querySelector(`#${id}`);
+    if (element) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function createUniqueId(id?: string, ...parentsToSearch: Element[]): string {
+  // Initialize ID if one wasn't provided.
+  if (id == null) {
+    id = "id";
+  }
+
+  // Return the input ID if it is not already in use.
+  if (!isIdInUse(id)) {
+    return id;
+  }
+
+  // Keep appending numbers until an unused ID is found.
+  let newId: string = id;
+  let i = 0;
+  while (isIdInUse(newId, ...parentsToSearch)) {
+    i++;
+    newId = `${id}${i}`;
+  }
+
+  return newId;
+}
+
 /**
  * Creates a document fragment containing a label and an input element.
  * @param options - Properties correspond to input attributes.
  * @returns An HTML Document fragment containing a input element and associated label.
  */
-function createLabelAndInput(options: CreateLabelAndInputOptions) {
+function createLabelAndInput(
+  options: CreateLabelAndInputOptions,
+  ...parentsToSearch: Element[]
+) {
   options = options || {};
 
   const docFrag = document.createDocumentFragment();
 
+  options.id = createUniqueId(options.name, ...parentsToSearch);
+
   if (options.label) {
     const label = document.createElement("label");
     label.textContent = options.label;
+    label.htmlFor = options.id;
     docFrag.appendChild(label);
   }
 
@@ -149,7 +202,7 @@ function createLabelAndInput(options: CreateLabelAndInputOptions) {
       ? options.required
       : Boolean(options.required);
 
-  const ignoredOptionNames = /^(?:(?:label)|(required))$/i;
+  const ignoredOptionNamesRe = /^(?:(?:label)|(?:required))$/i;
 
   type InputElementPropertyType = string | boolean | RegExp;
 
@@ -158,19 +211,17 @@ function createLabelAndInput(options: CreateLabelAndInputOptions) {
       continue;
     }
     const option = (options as Record<string, InputElementPropertyType>)[name];
-    if (option == null) {
+    if (option == null || ignoredOptionNamesRe.test(name)) {
       continue;
     }
-    if (!ignoredOptionNames.test(name)) {
-      const propVal = option;
-      if (propVal instanceof RegExp) {
-        input.setAttribute(name, propVal.source);
-      } else if (typeof propVal !== "string") {
-        (input as unknown as Record<string, InputElementPropertyType>)[name] =
-          propVal;
-      } else {
-        input.setAttribute(name, propVal);
-      }
+    const propVal = option;
+    if (propVal instanceof RegExp) {
+      input.setAttribute(name, propVal.source);
+    } else if (typeof propVal !== "string") {
+      (input as unknown as Record<string, InputElementPropertyType>)[name] =
+        propVal;
+    } else {
+      input.setAttribute(name, propVal);
     }
   }
 
@@ -178,8 +229,6 @@ function createLabelAndInput(options: CreateLabelAndInputOptions) {
 
   return docFrag;
 }
-
-export const coordinatesUpdateEventName = "coordinates-update";
 
 /**
  * UI for the AirspaceCalculator
@@ -217,7 +266,7 @@ export default class UI {
       });
 
       this._form.dispatchEvent(evt);
-    }
+    };
 
     const form = document.createElement("form") as AirspaceCalculatorForm;
     this._form = form;
@@ -237,7 +286,7 @@ export default class UI {
       title: "Longitude in dec. degrees or DMS format.",
       required: "required",
       autocomplete: "on",
-    });
+    }, inputContainer);
     let div = document.createElement("div");
     div.appendChild(frag);
 
@@ -254,7 +303,7 @@ export default class UI {
       title: "Latitude in dec. degrees or DMS format.",
       required: "required",
       autocomplete: "on",
-    });
+    }, inputContainer);
     div = document.createElement("div");
     div.appendChild(frag);
 
@@ -270,7 +319,7 @@ export default class UI {
       title: "Enter a structure height in feet",
       min: 1,
       required: "required",
-    });
+    }, inputContainer);
     div = document.createElement("div");
     div.appendChild(frag);
 
@@ -360,13 +409,13 @@ export default class UI {
           this.elevationServiceUrl
         ).then(
           (response) => {
-            const evt = new CustomEvent("calculation-complete", {
+            const evt = new CustomEvent(calculationCompleteEventName, {
               detail: response,
             });
             form.dispatchEvent(evt);
           },
           (error) => {
-            const evt = new CustomEvent("calculation-error", {
+            const evt = new CustomEvent(calculationErrorEventName, {
               detail: error,
             });
             form.dispatchEvent(evt);
