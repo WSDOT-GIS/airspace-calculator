@@ -1,3 +1,4 @@
+import { setupDisclaimer } from "./dialog";
 import "./style.css";
 
 Promise.all([
@@ -31,6 +32,7 @@ Promise.all([
     view.when(async () => {
       const { setupWidgets } = await import("./widgets");
       setupWidgets(view);
+      setupDisclaimer(view.container);
     });
   }
 );

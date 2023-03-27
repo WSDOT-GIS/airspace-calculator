@@ -16,7 +16,7 @@
   <div id="viewDiv"></div>
   <script type="module" src="/src/main.ts" async="async"></script>
 
-  <dialog id="disclaimerTemplate">
+  <template id="disclaimerTemplate">
     <h1>Airport Mapping Webpage Disclaimer</h1>
 
     <p class="important">Please read carefully</p>
@@ -51,7 +51,11 @@
     </p>
 
     <p>I have read, understand and fully agree with this <q>Disclaimer and Terms of Service</q></p>
-  </dialog>
+
+    <p>
+      <button type="button" id="disclaimerAgreeButton">I Agree</button>
+    </p>
+  </template>
 </body>
 
 </html>

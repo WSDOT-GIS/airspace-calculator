@@ -1,3 +1,5 @@
+// TODO: Replace with Calcite component.
+
 import { watch } from '@arcgis/core/core/reactiveUtils';
 import type View from '@arcgis/core/views/View';
 

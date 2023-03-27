@@ -2,12 +2,21 @@ import type EsriMap from "@arcgis/core/Map";
 import type View from "@arcgis/core/views/View";
 import Expand from "@arcgis/core/widgets/Expand";
 import type { AirspaceCalculatorResult } from "airspace-calculator";
+import type { AirspaceCalculatorForm } from "airspace-calculator-ui";
 
+/**
+ * This is the image service URL that is used by default if not overridden.
+ */
 const defaultImageServiceUrl =
   "https://data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer";
 
+/**
+ * Determines if an {@link Event} is a {@link CustomEvent<AirspaceCalculatorResult>}
+ * @param e - An event
+ * @returns Returns a boolean indicating if the input event an {@link AirspaceCalculatorResult} {@link CustomEvent}
+ */
 export function isAirspaceCalculatorResult(
-  e: Event
+  e: unknown
 ): e is CustomEvent<AirspaceCalculatorResult> {
   if (!(e instanceof CustomEvent)) {
     return false;
@@ -20,6 +29,26 @@ export function isAirspaceCalculatorResult(
     }
   }
   return true;
+}
+
+export function isAirspaceCalulatorErrorEvent(
+  e: unknown
+): e is CustomEvent<Error> {
+  return e instanceof CustomEvent && e.detail instanceof Error;
+}
+
+/**
+ * Hide and disable the "pick" button, as this app
+ * already does this whenever the user clicks on the map.
+ */
+function hidePickButton(form: AirspaceCalculatorForm) {
+  const titles = [
+    "Pick coordinates by clicking a location on the map",
+    "Clears graphics from the map created by this control",
+  ];
+  const selector = titles.map((t) => `button[title='${t}']`).join(",");
+  const buttons = form.querySelectorAll<HTMLButtonElement>(selector);
+  buttons.forEach((button) => (button.hidden = button.disabled = true));
 }
 
 async function addImageryLayer(
@@ -62,6 +91,8 @@ export async function setupAirspaceCalculator(
   const ui = new AirspaceCalculatorUI(imageServiceUrl);
   const { form } = ui;
 
+  hidePickButton(form);
+
   function populateXYInputs(event: __esri.ViewClickEvent) {
     console.debug("map clicked", { event });
     const { mapPoint } = event;
@@ -80,7 +111,10 @@ export async function setupAirspaceCalculator(
 
   form.classList.add("esri-widget");
   form.addEventListener("calculation-error", function (e) {
-    console.error("calculation error", e);
+    const isExpectedErrorType = isAirspaceCalulatorErrorEvent(e);
+    const message = isExpectedErrorType ? e.detail.message : JSON.stringify(e);
+    console.error(isExpectedErrorType ? message : "calculation error", e);
+    alert(message);
   });
 
   function handleCalculationCompletion(e: Event) {
@@ -89,14 +123,17 @@ export async function setupAirspaceCalculator(
     if (!isAirspaceCalculatorResult(e)) {
       const message = `Was expecting event to be a ${CustomEvent.name}`;
       console.error(message);
+      alert(`An unexpected error was encountered: ${message}`);
       // TODO: Show a popup at the clicked location informing the user that there was a problem.
       return;
     }
     // Get the airspace calculator result from the CustomEvent's detail.
     const { detail: acResult } = e;
+    const message = acResult.surfacePenetration.toString();
     // TODO: Add a graphic with this result as its attributes to a graphics or feature layer.
     // TODO: Open that graphic's popup.
-    console.log(acResult.surfacePenetration.toString(), acResult);
+    console.log(message, acResult);
+    alert(message);
   }
 
   form.addEventListener("calculation-complete", handleCalculationCompletion);
@@ -104,6 +141,7 @@ export async function setupAirspaceCalculator(
 
   const expand = new Expand({
     content: ui.form,
+    expanded: true,
   });
 
   return expand;
