@@ -41,14 +41,31 @@ export function isAirspaceCalulatorErrorEvent(
  * Hide and disable the "pick" button, as this app
  * already does this whenever the user clicks on the map.
  */
-function hidePickButton(form: AirspaceCalculatorForm) {
+function customizeButtons(form: AirspaceCalculatorForm) {
   const titles = [
     "Pick coordinates by clicking a location on the map",
     "Clears graphics from the map created by this control",
   ];
   const selector = titles.map((t) => `button[title='${t}']`).join(",");
-  const buttons = form.querySelectorAll<HTMLButtonElement>(selector);
-  buttons.forEach((button) => (button.hidden = button.disabled = true));
+  let buttons = form.querySelectorAll<HTMLButtonElement>(selector);
+  buttons.forEach((button) => {
+    button.remove();
+  });
+
+  buttons = form.querySelectorAll("button");
+  buttons.forEach((b) => {
+    b.classList.add("esri-button");
+    if (b.type === "submit") {
+      b.classList.add("esri-widget-button","esri-button--primary");
+    } else {
+      b.classList.add("esri-widget-button","esri-button--secondary")
+    }
+  });
+
+  form.querySelectorAll("input,label").forEach(element => {
+    const cssClass = `esri-${element.tagName.toLowerCase()}`;
+    element.classList.add(cssClass);
+  })
 }
 
 async function addImageryLayer(
@@ -91,7 +108,7 @@ export async function setupAirspaceCalculator(
   const ui = new AirspaceCalculatorUI(imageServiceUrl);
   const { form } = ui;
 
-  hidePickButton(form);
+  customizeButtons(form);
 
   function populateXYInputs(event: __esri.ViewClickEvent) {
     console.debug("map clicked", { event });

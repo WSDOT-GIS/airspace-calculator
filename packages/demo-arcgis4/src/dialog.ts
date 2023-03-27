@@ -27,6 +27,7 @@ export function setupDisclaimer(parent: HTMLElement = document.body) {
   const clone = template.content.cloneNode(true) as DocumentFragment;
   // Create a dialog element and append it to the parent.
   const dialog = document.createElement("dialog");
+  dialog.classList.add("esri-widget");
   dialog.append(clone);
   // Find the "agree" button and attach the event listener that will
   // close the dialog when the user clicks it.
