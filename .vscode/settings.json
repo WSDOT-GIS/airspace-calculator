@@ -1,6 +1,9 @@
 {
     "conventionalCommits.scopes": [
+        "airspace-calculator",
         "UI",
+        "ArcGIS3",
+        "demo-arcgis3",
         "demo-arcgis4"
     ]
 }

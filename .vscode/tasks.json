@@ -8,8 +8,13 @@
 			"problemMatcher": [
 				"$tsc-watch"
 			],
+			"icon": {
+				"id": "eye-watch",
+				"color": "terminal.ansiRed"
+			},
 			"group": "build",
-			"label": "tsc: watch - packages/airspace-calculator/tsconfig.json"
+			"label": "Watch airspace-calculator",
+			"isBackground": true
 		},
 		{
 			"type": "typescript",
@@ -18,29 +23,44 @@
 			"problemMatcher": [
 				"$tsc-watch"
 			],
+			"icon": {
+				"id": "eye-watch",
+				"color": "terminal.ansiRed"
+			},
 			"group": "build",
-			"label": "tsc: watch - packages/UI/tsconfig.json"
+			"label": "Watch UI",
+			"isBackground": true
 		},
 		{
+			"label": "Watch ArcGIS 3",
 			"type": "typescript",
 			"tsconfig": "packages/ArcGis3/tsconfig.json",
 			"option": "watch",
+			"icon": {
+				"id": "eye-watch",
+				"color": "terminal.ansiRed"
+			},
 			"problemMatcher": [
 				"$tsc-watch"
 			],
 			"group": "build",
-			"label": "tsc: watch - packages/ArcGis3/tsconfig.json"
+			"isBackground": true
 		},
 		{
 			"type": "npm",
 			"script": "watch",
 			"path": "packages/demo-arcgis3",
 			"group": "build",
+			"icon": {
+				"id": "eye-watch",
+				"color": "terminal.ansiRed"
+			},
 			"problemMatcher": [
 				"$ts-webpack-watch"
 			],
-			"label": "npm: watch - packages/demo-arcgis3",
-			"detail": "webpack -w"
+			"label": "Watch ArcGIS 3 Demo",
+			"detail": "webpack -w",
+			"isBackground": true
 		},
 		{
 			"type": "npm",
@@ -50,8 +70,9 @@
 			"problemMatcher": [
 				
 			],
-			"label": "watch demo-arcgis4",
-			"detail": "Runs `vite dev` for ArcGIS 4 demo"
+			"label": "Watch ArcGIS 4 Demo",
+			"detail": "Runs `vite dev` for ArcGIS 4 demo",
+			"isBackground": true
 		},
 		{
 			"label": "Watch All",
@@ -63,9 +84,9 @@
 			},
 			"group": "build",
 			"dependsOn": [
-				"tsc: watch - packages/airspace-calculator/tsconfig.json",
-				"tsc: watch - packages/UI/tsconfig.json",
-				"watch demo-arcgis4"
+				"Watch airspace-calculator",
+				"Watch UI",
+				"Watch ArcGIS 4 Demo"
 			],
 			"problemMatcher": [
 				"$tsc-watch"
