@@ -6,8 +6,8 @@ import {
 } from "usgs-ned";
 import { identify } from "./identify";
 import SurfacePenetrationInfo from "./SurfacePenetrationInfo";
-
-export { SurfacePenetrationInfo };
+export * from "./SurfacePenetrationInfo";
+export * from "./formatting";
 
 /**
  * Result of the Airspace Calculator.

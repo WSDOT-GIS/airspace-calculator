@@ -23,6 +23,9 @@ Promise.all([
 
     const view = new MapView({
       container: "viewDiv",
+      popup: {
+        defaultPopupTemplateEnabled: true
+      },
       extent: waExtent,
       map,
     });

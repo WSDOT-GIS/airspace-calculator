@@ -1,3 +1,74 @@
+import { createSurfacePenetrationMessage } from "./formatting";
+
+/**
+ * Determines if a penetration of surface value value
+ * is non-null and greater than zero.
+ * @param penetrationOfSurface
+ * @returns - The result of {@link penetrationOfSurface} `!= null &&` {@link penetrationOfSurface} `> 0`
+ */
+export function penetratesSurface(
+  penetrationOfSurface?: ReturnType<typeof getPenetrationOfSurface>
+): boolean {
+  return penetrationOfSurface != null && penetrationOfSurface > 0;
+}
+
+/**
+ * Gets the distance from the surface.
+ * @param surfaceElevation
+ * @param terrainElevation
+ * @returns Distance from the surface: {@link surfaceElevation} - {@link terrainElevation}
+ */
+export function getDistanceFromSurface(
+  surfaceElevation: number,
+  terrainElevation: number
+) {
+  return surfaceElevation != null ? surfaceElevation - terrainElevation : null;
+}
+
+/**
+ * Gets the penetration of surface.
+ * @param surfaceElevation
+ * @param agl
+ * @param distanceFromSurface
+ * @returns
+ */
+export function getPenetrationOfSurface(
+  surfaceElevation: number,
+  agl: number,
+  distanceFromSurface: ReturnType<typeof getDistanceFromSurface>
+) {
+  return surfaceElevation != null ? agl - (distanceFromSurface || 0) : null;
+}
+
+/**
+ * Parses a surface elevation value into a number.
+ * @param surfaceElevation
+ * @returns - {@link surfaceElevation} as a number.
+ */
+export function parseSurfaceElevation(
+  surfaceElevation: number | string | null
+) {
+  if (surfaceElevation === null) {
+    return null;
+  }
+  if (typeof surfaceElevation === "number") {
+    if (isNaN(surfaceElevation)) {
+      throw new TypeError("Input surface elevation cannot NaN.");
+    }
+    return surfaceElevation;
+  }
+
+  if (surfaceElevation === "NoData") {
+    throw new TypeError("Surface elevation has no data.");
+  } else {
+    const parsedSurfaceElevation = parseFloat(surfaceElevation);
+    if (isNaN(parsedSurfaceElevation)) {
+      throw new TypeError(`Input string is not a number: ${surfaceElevation}`);
+    }
+    return parsedSurfaceElevation;
+  }
+}
+
 /**
  * Provides information about surface penetration.
  */
@@ -16,23 +87,7 @@ export class SurfacePenetrationInfo extends Object {
     public readonly terrainElevation: number
   ) {
     super();
-    if (typeof surfaceElevation === "string") {
-      if (surfaceElevation === "NoData") {
-        throw new TypeError("Surface elevation has no data.");
-      } else {
-        surfaceElevation = parseFloat(surfaceElevation);
-        if (isNaN(surfaceElevation)) {
-          throw new TypeError(
-            `Input string is not a number: ${surfaceElevation}`
-          );
-        }
-        this._surfaceElevation = surfaceElevation;
-      }
-    } else if (typeof surfaceElevation === "number") {
-      this._surfaceElevation = surfaceElevation;
-    } else {
-      this._surfaceElevation = null;
-    }
+    this._surfaceElevation = parseSurfaceElevation(surfaceElevation);
   }
 
   /**
@@ -46,35 +101,38 @@ export class SurfacePenetrationInfo extends Object {
    * Distance from the surface
    */
   public get distanceFromSurface(): number | null {
-    return this.surfaceElevation != null
-      ? this.surfaceElevation - this.terrainElevation
-      : null;
+    if (this.surfaceElevation === null) {
+      return null;
+    }
+    return getDistanceFromSurface(this.surfaceElevation, this.terrainElevation);
   }
 
   /**
    * Penetration of surface
    */
   public get penetrationOfSurface(): number | null {
-    return this.surfaceElevation != null
-      ? this.agl - (this.distanceFromSurface || 0)
-      : null;
+    if (this.surfaceElevation == null || this.distanceFromSurface == null) {
+      return null;
+    }
+    return getPenetrationOfSurface(
+      this.surfaceElevation,
+      this.agl,
+      this.distanceFromSurface
+    );
   }
 
   /**
    * Indicates if a structure of the given height would penetrate the surface
    */
   public get penetratesSurface(): boolean {
-    return this.penetrationOfSurface != null && this.penetrationOfSurface > 0;
+    return penetratesSurface(this.penetrationOfSurface);
   }
 
   /**
    * @inheritdoc
    */
-  override toString(): string {
-    const message = `A structure ${this.agl}' above ground level ${
-      this.penetratesSurface ? "would" : "would not"
-    } penetrate an airport's airspace.`;
-    return message;
+  override toString() {
+    return createSurfacePenetrationMessage(this);
   }
 }
 

@@ -110,7 +110,7 @@ export async function identify(
   // https://developers.arcgis.com/rest/services-reference/enterprise/identify-image-service-.htm
   const jsonObj: IdentifyResponse = await queryResponse.json();
   const pixelValue = jsonObj.value;
-  const n = Number(pixelValue);
+  const n = parseFloat(pixelValue); //Number(pixelValue);
   // Return the number, or pixel value if not a number.
   return isNaN(n) ? pixelValue : n;
 }

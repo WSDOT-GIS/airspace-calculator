@@ -1,8 +1,13 @@
 import type EsriMap from "@arcgis/core/Map";
-import type View from "@arcgis/core/views/View";
 import Expand from "@arcgis/core/widgets/Expand";
 import type { AirspaceCalculatorResult } from "airspace-calculator";
+import {
+  addAirspaceCalculatorResult,
+  airspaceCalculatorResultsLayerTitle,
+} from "./results-layer";
 import type { AirspaceCalculatorForm } from "airspace-calculator-ui";
+import type FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import MapView from "@arcgis/core/views/MapView";
 
 /**
  * This is the image service URL that is used by default if not overridden.
@@ -56,16 +61,16 @@ function customizeButtons(form: AirspaceCalculatorForm) {
   buttons.forEach((b) => {
     b.classList.add("esri-button");
     if (b.type === "submit") {
-      b.classList.add("esri-widget-button","esri-button--primary");
+      b.classList.add("esri-widget-button", "esri-button--primary");
     } else {
-      b.classList.add("esri-widget-button","esri-button--secondary")
+      b.classList.add("esri-widget-button", "esri-button--secondary");
     }
   });
 
-  form.querySelectorAll("input,label").forEach(element => {
+  form.querySelectorAll("input,label").forEach((element) => {
     const cssClass = `esri-${element.tagName.toLowerCase()}`;
     element.classList.add(cssClass);
-  })
+  });
 }
 
 async function addImageryLayer(
@@ -81,7 +86,7 @@ async function addImageryLayer(
 }
 
 export async function setupAirspaceCalculator(
-  view: View,
+  view: MapView,
   imageServiceUrl = defaultImageServiceUrl
 ) {
   // Import modules.
@@ -135,6 +140,11 @@ export async function setupAirspaceCalculator(
   });
 
   function handleCalculationCompletion(e: Event) {
+    const acLayerView = view.layerViews.find(
+      (lv) => lv.layer.title === airspaceCalculatorResultsLayerTitle
+    );
+    const acLayer = acLayerView.layer as FeatureLayer;
+
     // If the event is not of the expected type, write the
     // error to the console.
     if (!isAirspaceCalculatorResult(e)) {
@@ -150,7 +160,31 @@ export async function setupAirspaceCalculator(
     // TODO: Add a graphic with this result as its attributes to a graphics or feature layer.
     // TODO: Open that graphic's popup.
     console.log(message, acResult);
-    alert(message);
+
+    const promise = addAirspaceCalculatorResult(acLayer, acResult)
+      .then((value) => {
+        console.debug(`Added Airspace Calculator result to feature layer`, {
+          acLayer,
+          acResult,
+          value,
+        });
+        const { graphic } = value;
+        return [graphic];
+        // view.popup.open({
+        //   features: [graphic]
+        // });
+        // view.popup.selectedFeatureIndex = 0
+      })
+      .catch((reason) => {
+        console.error(
+          `An error occurred adding a result to the feature layer`,
+          { acLayer, acResult, reason }
+        );
+      });
+
+    view.popup.open({
+      promises: [promise]
+    });
   }
 
   form.addEventListener("calculation-complete", handleCalculationCompletion);

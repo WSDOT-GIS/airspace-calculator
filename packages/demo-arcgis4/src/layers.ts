@@ -1,4 +1,5 @@
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer";
+import { createAirspaceCalculatorResultsLayer } from "./results-layer";
 
 export const airportFacilitiesLayer = new MapImageLayer({
   title: "Airport Facilities",
@@ -16,4 +17,6 @@ export const faaObstaclesLayer = new MapImageLayer({
   url: "https://maps6.arcgisonline.com/ArcGIS/rest/services/A-16/FAA_Obstacles/MapServer",
 });
 
-export default [airportFacilitiesLayer, airspaceFeatures, faaObstaclesLayer];
+export const acLayer = createAirspaceCalculatorResultsLayer();
+
+export default [airportFacilitiesLayer, airspaceFeatures, faaObstaclesLayer, acLayer];

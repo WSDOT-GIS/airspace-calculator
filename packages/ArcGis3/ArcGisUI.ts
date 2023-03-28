@@ -68,6 +68,7 @@ function createRenderer() {
   return renderer;
 }
 
+//#region TODO: refactor: Import these functions from airspace-calculator
 /**
  * Converts feet to meters
  * @param {number} feet
@@ -112,6 +113,7 @@ function formatFeetAsFeetAndInchesAndMeters(feet: number) {
     " m.)",
   ].join("");
 }
+//#endregion
 
 /**
  * Converts an {@link AirspaceCalculatorResult} into a {@link external:Graphic}.
