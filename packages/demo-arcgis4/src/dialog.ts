@@ -43,4 +43,5 @@ export function setupDisclaimer(parent: HTMLElement = document.body) {
 
   parent.append(dialog);
   dialog.showModal();
+  agreeButton?.focus();
 }
