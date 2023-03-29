@@ -1,5 +1,5 @@
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer";
-import { createAirspaceCalculatorResultsLayer } from "./results-layer";
+import { createAirspaceCalculatorResultsLayer } from "./airspace-calc/results-layer";
 
 export const airportFacilitiesLayer = new MapImageLayer({
   title: "Airport Facilities",

@@ -3,7 +3,7 @@ import Expand from "@arcgis/core/widgets/Expand";
 import type Widget from "@arcgis/core/widgets/Widget";
 import type ListItem from "@arcgis/core/widgets/LayerList/ListItem";
 import type { AirspaceCalculatorForm } from "airspace-calculator-ui";
-import { setupAirspaceCalculator } from "./ac-controls";
+import { setupAirspaceCalculator } from "./airspace-calc/ac-controls";
 
 function setupLegend(view: MapView) {
   import("@arcgis/core/widgets/Legend").then(({ default: Legend }) => {
