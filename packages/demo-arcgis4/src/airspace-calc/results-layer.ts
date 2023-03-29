@@ -4,18 +4,27 @@ import Graphic from "@arcgis/core/Graphic";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
-import { AirspaceCalculatorResult } from "airspace-calculator";
 import type { ElevationData } from "usgs-ned";
+import type {
+  AirspaceCalculatorResult,
+  SurfacePenetrationInfo,
+} from "airspace-calculator";
 
 export type AirspaceCalculatorResultAttributes = Partial<
   Pick<ElevationData<Date>, "locationId" | "rasterId" | "resolution"> & {
-    AcquisitionDate: ReturnType<typeof Date.prototype.valueOf>;
-  } & {
-    agl: number;
-    surfaceElevation: number | null;
-    terrainElevation: number;
-    ObjectID: number;
-  }
+    AcquisitionDate: ReturnType<typeof Date.prototype.valueOf> | null;
+  } & Pick<
+      SurfacePenetrationInfo,
+      | "agl"
+      | "surfaceElevation"
+      | "terrainElevation"
+      | "distanceFromSurface"
+      | "penetrationOfSurface"
+    > & {
+      agl: number;
+      ObjectID: number;
+      penetratesSurface: number;
+    }
 >;
 
 /**
@@ -28,7 +37,14 @@ function flattenAirspaceCalculatorResult(
   airspaceCalculatorResult: AirspaceCalculatorResult
 ): AirspaceCalculatorResultAttributes {
   const { surfacePenetration, terrainInfo } = airspaceCalculatorResult;
-  const { agl, surfaceElevation, terrainElevation } = surfacePenetration;
+  const {
+    agl,
+    surfaceElevation,
+    terrainElevation,
+    distanceFromSurface,
+    penetratesSurface,
+    penetrationOfSurface,
+  } = surfacePenetration;
   const { locationId, rasterId, resolution, attributes } = terrainInfo;
   return {
     agl,
@@ -37,7 +53,10 @@ function flattenAirspaceCalculatorResult(
     locationId,
     rasterId,
     resolution,
-    AcquisitionDate: attributes?.AcquisitionDate.valueOf(),
+    distanceFromSurface,
+    penetratesSurface: Number(penetratesSurface),
+    penetrationOfSurface,
+    AcquisitionDate: attributes?.AcquisitionDate.valueOf() ?? null,
   };
 }
 
@@ -49,7 +68,7 @@ function createResultGraphic(
   const [x, y] = airspaceCalculatorResult.xy;
   properties.geometry = new Point({ x, y });
 
-  const acAttributes: AirspaceCalculatorResultAttributes &
+  const acAttributes: ReturnType<typeof flattenAirspaceCalculatorResult> &
     Record<string, unknown> = flattenAirspaceCalculatorResult(
     airspaceCalculatorResult
   );
@@ -71,7 +90,7 @@ function createResultGraphic(
  * An enumeration of field names, allowing them to be referenced
  * without having multiple copies of the same string.
  */
-export enum fieldNames {
+export const enum fieldNames {
   ObjectID = "OBJECTID",
   agl = "agl",
   surfaceElevation = "surfaceElevation",
@@ -80,6 +99,9 @@ export enum fieldNames {
   rasterId = "rasterId",
   resolution = "resolution",
   AcquisitionDate = "AcquisitionDate",
+  distanceFromSurface = "distanceFromSurface",
+  penetratesSurface = "penetratesSurface",
+  penetrationOfSurface = "penetrationOfSurface",
 }
 
 const renderer = new SimpleRenderer({
@@ -136,6 +158,24 @@ export function createAirspaceCalculatorResultsLayer(): FeatureLayer {
         name: fieldNames.AcquisitionDate,
         alias: "Acquisition Date",
         type: "date",
+      },
+      {
+        name: fieldNames.distanceFromSurface,
+        alias: "Distance from Surface",
+        type: "double",
+        valueType: "measurement",
+      },
+      {
+        name: fieldNames.penetratesSurface,
+        alias: "Penetrates Surface",
+        type: "small-integer",
+        valueType: "binary",
+      },
+      {
+        name: fieldNames.penetrationOfSurface,
+        alias: "Penetration of Surface",
+        type: "double",
+        valueType: "measurement",
       },
     ],
     // This layer will not use a remote source, only locally created graphics.
