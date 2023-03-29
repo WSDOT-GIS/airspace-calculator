@@ -4,12 +4,16 @@ import Graphic from "@arcgis/core/Graphic";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import SimpleRenderer from "@arcgis/core/renderers/SimpleRenderer";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
-import type { ElevationData } from "usgs-ned";
 import type {
   AirspaceCalculatorResult,
-  SurfacePenetrationInfo,
+  SurfacePenetrationInfo
 } from "airspace-calculator";
+import type { ElevationData } from "usgs-ned";
+import { popupTemplate } from "./popup-template";
 
+/**
+ * Defines the properties that a feature in the results {@link FeatureLayer} will have
+ */
 export type AirspaceCalculatorResultAttributes = Partial<
   Pick<ElevationData<Date>, "locationId" | "rasterId" | "resolution"> & {
     AcquisitionDate: ReturnType<typeof Date.prototype.valueOf> | null;
@@ -90,7 +94,7 @@ function createResultGraphic(
  * An enumeration of field names, allowing them to be referenced
  * without having multiple copies of the same string.
  */
-export const enum fieldNames {
+export const enum fieldNames { 
   ObjectID = "OBJECTID",
   agl = "agl",
   surfaceElevation = "surfaceElevation",
@@ -186,6 +190,7 @@ export function createAirspaceCalculatorResultsLayer(): FeatureLayer {
     spatialReference: {
       wkid: 4326,
     },
+    popupTemplate: popupTemplate
   });
 
   layer.on("layerview-create-error", (error) => {
