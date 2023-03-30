@@ -6,11 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "prepreview": "npm run build",
     "preview": "vite preview"
   },
   "devDependencies": {
     "@arcgis/core": "^4.26.5",
     "airspace-calculator-ui": "^1.0.0",
+    "gh-pages": "^5.0.0",
     "vite": "^4.2.1"
   }
 }

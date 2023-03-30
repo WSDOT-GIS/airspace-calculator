@@ -10,7 +10,7 @@ export function setupDisclaimer(parent: HTMLElement = document.body) {
    * 3. Removes the dialog from its parent element.
    * @this HTMLButtonElement - The close button
    */
-  function closeForm(this: HTMLButtonElement, ev: MouseEvent) {
+  function closeForm(this: HTMLButtonElement /*, ev: MouseEvent*/) {
     dialog.close();
     agreeButton?.removeEventListener("click", closeForm);
     dialog.remove();

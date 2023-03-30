@@ -1,7 +1,4 @@
 import PopupTemplate from "@arcgis/core/PopupTemplate";
-// import FieldInfo from "@arcgis/core/popup/FieldInfo";
-import { fieldNames } from "./results-layer";
-import Graphic from "@arcgis/core/Graphic";
 import { formatResults } from "airspace-calculator";
 
 /**
