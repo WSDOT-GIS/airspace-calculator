@@ -161,30 +161,7 @@ export async function setupAirspaceCalculator(
     // TODO: Open that graphic's popup.
     console.log(message, acResult);
 
-    const promise = addAirspaceCalculatorResult(acLayer, acResult)
-      .then((value) => {
-        console.debug(`Added Airspace Calculator result to feature layer`, {
-          acLayer,
-          acResult,
-          value,
-        });
-        const { graphic } = value;
-        return [graphic];
-        // view.popup.open({
-        //   features: [graphic]
-        // });
-        // view.popup.selectedFeatureIndex = 0
-      })
-      .catch((reason) => {
-        console.error(
-          `An error occurred adding a result to the feature layer`,
-          { acLayer, acResult, reason }
-        );
-      });
-
-    view.popup.open({
-      promises: [promise]
-    });
+    addAirspaceCalculatorResult(acLayer, acResult);
   }
 
   form.addEventListener("calculation-complete", handleCalculationCompletion);
