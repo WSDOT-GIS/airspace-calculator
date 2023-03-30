@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "prepreview": "npm run build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "node tools/publish.mjs"
   },
   "devDependencies": {
     "@arcgis/core": "^4.26.5",

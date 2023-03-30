@@ -21,7 +21,7 @@ function getBase() {
     throw new Error(`Error finding match in ${repoUrl}`);
   }
   const [repoName] = match;
-  return `/${repoName}`;
+  return `/${repoName}/`;
 }
 
 export default defineConfig((/*config*/) => {

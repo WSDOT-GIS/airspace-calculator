@@ -111,7 +111,10 @@ export const enum fieldNames {
 const renderer = new SimpleRenderer({
   symbol: new SimpleMarkerSymbol({
     style: "circle",
-    color: "black",
+    color: "white",
+    outline: {
+      color: "black",
+    },
     size: 12,
   }),
 });
