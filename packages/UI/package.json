@@ -2,8 +2,8 @@
   "name": "airspace-calculator-ui",
   "version": "1.0.0",
   "description": "UI controls for airspace-calculator",
-  "main": "./UI.js",
-  "types": "./UI.d.ts",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "type": "module",
   "files": [
     "*.css",
