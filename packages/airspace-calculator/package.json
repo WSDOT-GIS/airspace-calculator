@@ -16,7 +16,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WSDOT-GIS/airspace-calculator.git"
+    "url": "git+https://github.com/WSDOT-GIS/airspace-calculator.git",
+    "directory": "./packages/airspace-calculator"
   },
   "keywords": [
     "airspace",
