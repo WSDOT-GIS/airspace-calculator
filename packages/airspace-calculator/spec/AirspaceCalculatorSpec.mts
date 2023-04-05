@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { calculateSurfacePenetration } from "../AirspaceCalculator";
+import { calculateSurfacePenetration } from "../module/index";
 
 const url =
   "https://data.wsdot.wa.gov/arcgis/rest/services/AirportMapApplication/AirspaceCalculatorSurface/ImageServer";
