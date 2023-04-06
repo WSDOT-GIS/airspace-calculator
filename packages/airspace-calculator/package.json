@@ -1,0 +1,45 @@
+{
+  "name": "airspace-calculator",
+  "version": "3.0.0",
+  "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
+  "main": "./module/index.js",
+  "type": "module",
+  "types": "./module/index.d.ts",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc"
+  },
+  "files": [
+    "./module/*.js",
+    "./module/*.d.ts",
+    "./module/*.js.map"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WSDOT-GIS/airspace-calculator.git",
+    "directory": "./packages/airspace-calculator"
+  },
+  "keywords": [
+    "airspace",
+    "calculator",
+    "surface",
+    "penetration"
+  ],
+  "author": "WSDOT",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/WSDOT-GIS/airspace-calculator/issues"
+  },
+  "homepage": "https://github.com/WSDOT-GIS/airspace-calculator#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.11",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.0.5"
+  },
+  "dependencies": {
+    "@types/arcgis-rest-api": "^10.4.5",
+    "dms-conversion": "^3.1.3",
+    "usgs-ned": "~4.0.1"
+  }
+}

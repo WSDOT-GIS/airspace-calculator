@@ -1,44 +1,31 @@
 {
-  "name": "airspace-calculator",
-  "version": "2.1.1",
-  "description": "Module that uses ArcGIS image service and USGS elevation service to determine if a structure can be erected at a given height. Also provides UI controls.",
-  "main": "AirspaceCalculator.js",
-  "scripts": {
-    "prepare": "tsc",
-    "test": "jasmine"
-  },
-  "files": [
-    "*.js",
-    "*.d.ts",
-    "*.js.map"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/WSDOT-GIS/airspace-calculator.git"
-  },
-  "keywords": [
-    "airspace",
-    "calculator",
-    "surface",
-    "penetration"
-  ],
-  "author": "WSDOT",
-  "license": "Unlicense",
-  "bugs": {
-    "url": "https://github.com/WSDOT-GIS/airspace-calculator/issues"
-  },
-  "homepage": "https://github.com/WSDOT-GIS/airspace-calculator#readme",
-  "devDependencies": {
-    "@types/arcgis-js-api": "^3.26.0",
-    "@types/geojson": "^7946.0.4",
-    "@types/jasmine": "^2.8.11",
-    "jasmine": "^3.5.0",
-    "tslint": "^5.20.0",
-    "typescript": "^3.6.3"
-  },
-  "dependencies": {
-    "@types/arcgis-rest-api": "^10.4.3",
-    "dms-conversion": "^3.1.1",
-    "usgs-ned": "~3.0.2"
-  }
+    "workspaces": [
+        "packages/airspace-calculator",
+        "packages/UI",
+        "packages/demo-arcgis4"
+    ],
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.57.0",
+        "@typescript-eslint/parser": "^5.57.0",
+        "eslint": "^8.37.0",
+        "eslint-config-prettier": "^8.8.0",
+        "prettier": "^2.8.7",
+        "typescript": "^5.0.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/WSDOT-GIS/airspace-calculator.git"
+    },
+    "keywords": [
+        "airspace",
+        "calculator",
+        "surface",
+        "penetration"
+    ],
+    "author": "WSDOT",
+    "license": "Unlicense",
+    "bugs": {
+        "url": "https://github.com/WSDOT-GIS/airspace-calculator/issues"
+    },
+    "homepage": "https://github.com/WSDOT-GIS/airspace-calculator#readme"
 }

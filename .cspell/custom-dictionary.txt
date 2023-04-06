@@ -1,0 +1,11 @@
+# Custom Dictionary Words
+arcgis
+basemap
+basemaps
+codepaths
+dijit
+subfolder
+subfolders
+tsbuildinfo
+USGS
+wkid
